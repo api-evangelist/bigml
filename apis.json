@@ -1,0 +1,98 @@
+{
+    "name": "BigML",
+    "description": "Machine Learning made beautifully simple for everyone.",
+    "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/159-bigml.jpg",
+    "tags": [
+        "api provider",
+        "api service provider",
+        "have api",
+        "machine learning"
+    ],
+    "created": "2019-12-19",
+    "modified": "2019-12-19",
+    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/bigml\/master\/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+        {
+            "name": "BigML",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/159-bigml.jpg",
+            "humanURL": "https:\/\/bigml.com\/",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-openapi",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/bigml-openapi.json"
+                }
+            ]
+        }
+    ],
+    "include": [],
+    "x-common": [
+        {
+            "type": "Base",
+            "url": "https:\/\/bigml.io"
+        },
+        {
+            "type": "Blog",
+            "url": "http:\/\/blog.bigml.com\/"
+        },
+        {
+            "type": "Blog RSS",
+            "url": "http:\/\/blog.bigml.com\/feed\/"
+        },
+        {
+            "type": "Crunchbase",
+            "url": "http:\/\/www.crunchbase.com\/company\/bigml"
+        },
+        {
+            "type": "Crunchbase",
+            "url": "https:\/\/crunchbase.com\/organization\/bigml"
+        },
+        {
+            "type": "Developers",
+            "url": "https:\/\/bigml.com\/developers"
+        },
+        {
+            "type": "Email",
+            "url": "info@bigml.com"
+        },
+        {
+            "type": "Email",
+            "url": "security@bigml.com"
+        },
+        {
+            "type": "Email",
+            "url": "privacy@bigml.com"
+        },
+        {
+            "type": "Email",
+            "url": "support@bigml.com"
+        },
+        {
+            "type": "Email",
+            "url": "tos@bigml.com"
+        },
+        {
+            "type": "Email",
+            "url": "gallery@bigml.com"
+        },
+        {
+            "type": "Github",
+            "url": "https:\/\/github.com\/bigml"
+        },
+        {
+            "type": "Pricing",
+            "url": "https:\/\/bigml.com\/pricing\/overview"
+        },
+        {
+            "type": "Twitter",
+            "url": "https:\/\/twitter.com\/bigmlcom"
+        },
+        {
+            "type": "Website",
+            "url": "https:\/\/bigml.com\/"
+        }
+    ]
+}
