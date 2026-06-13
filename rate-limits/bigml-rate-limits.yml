@@ -1,0 +1,42 @@
+name: BigML Rate Limits
+description: Rate limits and task quotas for the BigML API
+url: https://bigml.com/pricing
+
+notes: >
+  BigML enforces limits primarily via parallel task capacity and dataset size
+  constraints, which vary by subscription tier. Specific HTTP-level rate limits
+  per second are not publicly documented; contact BigML support for enterprise
+  limits. Use api.get_tasks_status() to check current task counts and availability.
+
+limits:
+
+  - tier: Free
+    parallel_tasks: 2
+    max_dataset_size: 16 MB per task
+    notes: Shared infrastructure, basic priority queue
+
+  - tier: Prime
+    parallel_tasks: Configurable (based on subscription)
+    max_dataset_size: Configurable (based on subscription)
+    notes: Prioritized job queues, flexible server topology
+
+  - tier: Private Deployment
+    parallel_tasks: Unlimited (constrained by server cores)
+    max_dataset_size: Unlimited (constrained by server resources)
+    notes: Dedicated servers; 1 server = 8 cores for Lite and Bronze tiers
+
+status_check:
+  method: api.get_tasks_status()
+  description: Returns current task counts, maximums, and availability metrics
+  fields:
+    - tasks: current number of running tasks
+    - max_tasks: maximum allowed parallel tasks
+    - available: whether new tasks can be submitted
+
+regional_endpoints:
+  - region: Global
+    base_url: https://bigml.io
+  - region: Australia (VPC)
+    base_url: https://au.bigml.io
+  - region: Virtual Private Cloud
+    base_url: Configured per deployment

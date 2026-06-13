@@ -1,0 +1,90 @@
+aid: bigml
+name: BigML
+description: >
+  BigML is a machine learning platform with a comprehensive REST API for creating
+  datasets, training models, making predictions, running batch predictions, and
+  managing ML workflows. The platform supports supervised and unsupervised learning
+  including decision trees, ensembles, deepnets, linear and logistic regression,
+  clustering, anomaly detection, topic models, and time series forecasting.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+tags:
+  - Machine Learning
+  - Artificial Intelligence
+  - Predictions
+  - Datasets
+  - Models
+  - Clustering
+  - Anomaly Detection
+  - Time Series
+  - Deep Learning
+
+apis:
+
+  - aid: bigml:bigml-api
+    name: BigML REST API
+    description: >
+      The BigML REST API provides programmatic access to the full BigML machine
+      learning platform. Create and manage sources, datasets, models, ensembles,
+      clusters, anomaly detectors, topic models, time series forecasters, and
+      generate predictions — both individual and batch — over HTTPS using
+      username and API key authentication.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://bigml.com/api/
+    baseURL: https://bigml.io
+    tags:
+      - Machine Learning
+      - Predictions
+      - Datasets
+      - Models
+      - REST API
+    properties:
+      - type: Documentation
+        url: https://bigml.com/api/
+      - type: OpenAPI
+        url: https://bigml.com/api/
+    contact:
+      - FN: BigML Support
+        url: https://support.bigml.com/
+
+common:
+
+  - type: Website
+    url: https://bigml.com/
+
+  - type: Documentation
+    url: https://bigml.com/documentation/
+
+  - type: GitHubOrg
+    url: https://github.com/bigmlcom
+
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/bigml-inc
+
+  - type: Blog
+    url: https://blog.bigml.com/
+
+  - type: Pricing
+    url: https://bigml.com/pricing
+
+  - type: StatusPage
+    url: https://status.bigml.com/
+
+  - type: X
+    url: https://x.com/bigmlcom
+
+  - type: Plans
+    url: plans/bigml-plans-pricing.yml
+
+  - type: RateLimits
+    url: rate-limits/bigml-rate-limits.yml
+
+  - type: FinOps
+    url: finops/bigml-finops.yml
+
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

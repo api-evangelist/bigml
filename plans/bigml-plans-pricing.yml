@@ -1,0 +1,78 @@
+name: BigML Plans and Pricing
+description: Pricing plans for BigML machine learning platform
+url: https://bigml.com/pricing
+plans:
+
+  - name: Free
+    description: Free tier for individuals getting started with machine learning
+    price: $0/month
+    features:
+      - Unlimited tasks and storage
+      - Max dataset size 16 MB per task
+      - Max 2 parallel tasks per user
+      - Basic support
+      - 1 user included
+      - 7-day free trial, no credit card required
+    users: 1
+    parallel_tasks: 2
+    dataset_size_limit: 16 MB
+
+  - name: Prime
+    description: Subscription plan for professional ML workflows
+    price: Variable based on dataset size and parallel task requirements
+    billing_options:
+      - Monthly
+      - Quarterly (15% discount)
+      - Yearly (30% discount)
+    features:
+      - Unlimited resources (datasets, models, etc.)
+      - Full functionality access
+      - Flexible server topology
+      - Prioritized job queues
+      - BigML Organizations collaboration features
+    discounts:
+      - Students, researchers, and NGOs: 50% off
+
+  - name: BigML Lite (Private Deployment)
+    description: Entry-level private deployment for organizations
+    price: $10,000/year or $1,000/month
+    features:
+      - 5 users
+      - 1 organization
+      - 1 server (8 cores)
+      - Standard 8x5 email/chat support (48-hour response)
+      - Unlimited tasks
+      - Regular feature updates
+
+  - name: Bronze Enterprise (Private Deployment)
+    description: Enterprise private deployment
+    price: $45,000/year + $10,000 setup fee
+    features:
+      - Up to 1 server (8 cores)
+      - Customized support (24-hour max response)
+      - Unlimited tasks
+      - Regular feature updates
+
+training_and_support:
+  - name: Basic BigML Workshop
+    duration: 3 hours
+    price: $800
+  - name: ML-Ready Data Workshop
+    duration: 3 hours
+    price: $800
+  - name: Comprehensive ML Course
+    duration: 16-24 hours
+    price: $7,000-$10,000
+  - name: Extra 24/7 Support
+    price: $3,000/month
+
+certifications:
+  - name: Analyst
+    price: $1,000 per person
+    bulk_discount: 10% off for 5+
+  - name: Engineer
+    price: $1,500 per person
+    bulk_discount: 10% off for 5+
+  - name: Architect
+    price: $2,500 per person
+    bulk_discount: 10% off for 5+
