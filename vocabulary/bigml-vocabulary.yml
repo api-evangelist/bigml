@@ -1,0 +1,390 @@
+title: BigML API Vocabulary
+description: >
+  Domain vocabulary for the BigML machine learning platform REST API.
+  Terms are drawn from the official BigML API documentation and Python SDK.
+version: "1.0.0"
+provider: BigML
+providerUrl: https://bigml.com/
+apiUrl: https://bigml.com/api/
+
+terms:
+
+  # Core data management
+  - term: source
+    label: Source
+    definition: >
+      A raw data resource created by uploading a file (CSV, Excel, JSON, ARFF) or
+      specifying a remote URL. Sources serve as the input for creating datasets.
+    category: Data Management
+    resourcePath: /source
+    relatedTerms: [dataset]
+
+  - term: dataset
+    label: Dataset
+    definition: >
+      A processed, structured version of a source, with typed fields and statistical
+      summaries. Datasets are the primary input for training ML models.
+    category: Data Management
+    resourcePath: /dataset
+    relatedTerms: [source, model]
+
+  - term: field
+    label: Field
+    definition: >
+      A column in a source or dataset. Each field has an operational type
+      (categorical, numeric, text, items, datetime, image) and statistical metadata.
+    category: Data Management
+    relatedTerms: [optype, objective_field]
+
+  - term: optype
+    label: Operational Type
+    definition: >
+      The data type classification BigML assigns to a field, determining how it is
+      processed. Values: categorical, numeric, text, items, datetime, image.
+    category: Data Management
+    relatedTerms: [field]
+
+  - term: objective_field
+    label: Objective Field
+    definition: >
+      The target field a supervised model is trained to predict. Also called the
+      label or dependent variable.
+    category: Supervised Learning
+    relatedTerms: [model, ensemble, deepnet, logisticregression, linearregression]
+
+  # Supervised learning models
+  - term: model
+    label: Model (Decision Tree)
+    definition: >
+      A supervised machine learning model trained using the CART decision tree algorithm.
+      Supports both classification and regression.
+    category: Supervised Learning
+    resourcePath: /model
+    relatedTerms: [dataset, prediction, ensemble, evaluation]
+
+  - term: ensemble
+    label: Ensemble
+    definition: >
+      A collection of multiple decision tree models (random forests or gradient boosted
+      trees) that combine predictions for improved accuracy and robustness.
+    category: Supervised Learning
+    resourcePath: /ensemble
+    relatedTerms: [model, dataset, prediction]
+
+  - term: deepnet
+    label: Deepnet
+    definition: >
+      A deep neural network model in BigML. Supports classification and regression
+      with automatic network architecture search.
+    category: Supervised Learning
+    resourcePath: /deepnet
+    relatedTerms: [dataset, prediction]
+
+  - term: logisticregression
+    label: Logistic Regression
+    definition: >
+      A supervised classification model based on logistic regression.
+      Supports multi-class classification with configurable regularization.
+    category: Supervised Learning
+    resourcePath: /logisticregression
+    relatedTerms: [dataset, prediction]
+
+  - term: linearregression
+    label: Linear Regression
+    definition: >
+      A supervised regression model based on ordinary least squares linear regression.
+    category: Supervised Learning
+    resourcePath: /linearregression
+    relatedTerms: [dataset, prediction]
+
+  - term: fusion
+    label: Fusion
+    definition: >
+      A model that combines predictions from multiple BigML models (of different types)
+      using weighted voting or stacking.
+    category: Supervised Learning
+    resourcePath: /fusion
+    relatedTerms: [model, ensemble, deepnet]
+
+  - term: optiml
+    label: OptiML
+    definition: >
+      An automated model optimization resource that trains and compares multiple model
+      types to select the best performer for a given dataset and objective.
+    category: Supervised Learning
+    resourcePath: /optiml
+    relatedTerms: [model, ensemble, deepnet, fusion]
+
+  # Predictions
+  - term: prediction
+    label: Prediction
+    definition: >
+      The result of applying a trained supervised model to a single input record.
+      Includes the predicted value and confidence/probability scores.
+    category: Predictions
+    resourcePath: /prediction
+    relatedTerms: [model, ensemble, deepnet, logisticregression, linearregression]
+
+  - term: batchprediction
+    label: Batch Prediction
+    definition: >
+      An asynchronous operation that applies a trained supervised model to every row
+      in a dataset and stores results in an output dataset.
+    category: Predictions
+    resourcePath: /batchprediction
+    relatedTerms: [prediction, model, dataset]
+
+  - term: evaluation
+    label: Evaluation
+    definition: >
+      A report assessing model performance against a test dataset. Includes accuracy,
+      precision, recall, F-measure (classification) or RMSE, MAE, R² (regression).
+    category: Predictions
+    resourcePath: /evaluation
+    relatedTerms: [model, ensemble, dataset]
+
+  # Unsupervised learning
+  - term: cluster
+    label: Cluster
+    definition: >
+      An unsupervised machine learning model trained using k-means (or G-means) clustering.
+      Groups data points into k clusters based on feature similarity.
+    category: Unsupervised Learning
+    resourcePath: /cluster
+    relatedTerms: [dataset, centroid, batchcentroid]
+
+  - term: centroid
+    label: Centroid
+    definition: >
+      The cluster assignment result for a single input record. Identifies which cluster
+      the record belongs to and the distance to the cluster center.
+    category: Unsupervised Learning
+    resourcePath: /centroid
+    relatedTerms: [cluster]
+
+  - term: batchcentroid
+    label: Batch Centroid
+    definition: >
+      An asynchronous operation that assigns every row in a dataset to its nearest
+      cluster centroid and saves results to an output dataset.
+    category: Unsupervised Learning
+    resourcePath: /batchcentroid
+    relatedTerms: [cluster, centroid, dataset]
+
+  - term: anomaly
+    label: Anomaly Detector
+    definition: >
+      An unsupervised model based on Isolation Forest that learns what is "normal"
+      in a dataset and assigns anomaly scores to new records.
+    category: Unsupervised Learning
+    resourcePath: /anomaly
+    relatedTerms: [dataset, anomalyscore]
+
+  - term: anomalyscore
+    label: Anomaly Score
+    definition: >
+      The anomaly score assigned to a single input record by an anomaly detector.
+      Scores range from 0 (normal) to 1 (highly anomalous).
+    category: Unsupervised Learning
+    resourcePath: /anomalyscore
+    relatedTerms: [anomaly]
+
+  - term: batchanomalyscore
+    label: Batch Anomaly Score
+    definition: >
+      An asynchronous operation that scores every row in a dataset for anomalousness
+      using an anomaly detector, saving results to an output dataset.
+    category: Unsupervised Learning
+    resourcePath: /batchanomalyscore
+    relatedTerms: [anomaly, anomalyscore, dataset]
+
+  - term: association
+    label: Association
+    definition: >
+      An unsupervised model that discovers association rules (if-then relationships)
+      between items in transactional or basket data using the FP-growth algorithm.
+    category: Unsupervised Learning
+    resourcePath: /association
+    relatedTerms: [dataset, associationset]
+
+  - term: associationset
+    label: Association Set
+    definition: >
+      The set of association rules that apply to a single input record from an
+      Association model.
+    category: Unsupervised Learning
+    resourcePath: /associationset
+    relatedTerms: [association]
+
+  - term: topicmodel
+    label: Topic Model
+    definition: >
+      An unsupervised natural language processing model based on Latent Dirichlet
+      Allocation (LDA) that discovers latent topics in a text dataset.
+    category: Unsupervised Learning
+    resourcePath: /topicmodel
+    relatedTerms: [dataset, topicdistribution]
+
+  - term: topicdistribution
+    label: Topic Distribution
+    definition: >
+      The probability distribution over topics for a single text input, produced by
+      a topic model.
+    category: Unsupervised Learning
+    resourcePath: /topicdistribution
+    relatedTerms: [topicmodel]
+
+  - term: pca
+    label: PCA (Principal Component Analysis)
+    definition: >
+      An unsupervised dimensionality reduction model that transforms dataset fields
+      into orthogonal principal components.
+    category: Unsupervised Learning
+    resourcePath: /pca
+    relatedTerms: [dataset, projection]
+
+  - term: projection
+    label: Projection
+    definition: >
+      The result of applying a PCA model to a single input record, expressing it in
+      the reduced principal component space.
+    category: Unsupervised Learning
+    resourcePath: /projection
+    relatedTerms: [pca]
+
+  - term: batchprojection
+    label: Batch Projection
+    definition: >
+      An asynchronous operation that projects every row in a dataset through a PCA
+      model and saves results to an output dataset.
+    category: Unsupervised Learning
+    resourcePath: /batchprojection
+    relatedTerms: [pca, projection, dataset]
+
+  # Time series
+  - term: timeseries
+    label: Time Series
+    definition: >
+      A forecasting model trained on temporal data. Supports multiple forecasting
+      methods including ETS, ARIMA, and seasonal decomposition.
+    category: Time Series
+    resourcePath: /timeseries
+    relatedTerms: [dataset, forecast]
+
+  - term: forecast
+    label: Forecast
+    definition: >
+      A forward-looking prediction generated by a time series model for one or more
+      objective fields over a specified horizon.
+    category: Time Series
+    resourcePath: /forecast
+    relatedTerms: [timeseries]
+
+  # Organization
+  - term: project
+    label: Project
+    definition: >
+      An organizational container for grouping related BigML resources. Resources
+      can be associated with a project at creation time.
+    category: Organization
+    resourcePath: /project
+
+  - term: configuration
+    label: Configuration
+    definition: >
+      A reusable set of creation parameters that can be applied when creating
+      resources, enabling templated model configurations.
+    category: Organization
+    resourcePath: /configuration
+
+  # Scripting
+  - term: script
+    label: Script
+    definition: >
+      A WhizzML program that automates ML workflows. Scripts can chain resource
+      creation, looping, and conditionals in BigML's Lisp-like DSL.
+    category: Automation
+    resourcePath: /script
+    relatedTerms: [execution, library]
+
+  - term: execution
+    label: Execution
+    definition: >
+      A single run of a WhizzML script with specific input values. Executions produce
+      output resources and logs.
+    category: Automation
+    resourcePath: /execution
+    relatedTerms: [script]
+
+  - term: library
+    label: Library
+    definition: >
+      A reusable collection of WhizzML functions that can be imported into scripts.
+    category: Automation
+    resourcePath: /library
+    relatedTerms: [script]
+
+  # Data connectors
+  - term: externalconnector
+    label: External Connector
+    definition: >
+      A connection configuration to an external database (PostgreSQL, MySQL,
+      Elasticsearch, BigQuery, SQL Server) that enables creating sources by
+      executing queries.
+    category: Data Connectors
+    resourcePath: /externalconnector
+    relatedTerms: [source]
+
+  # Authentication
+  - term: api_key
+    label: API Key
+    definition: >
+      A secret token used together with the username to authenticate BigML API requests.
+      Passed as a query parameter: ?username=<user>&api_key=<key>.
+    category: Authentication
+
+  - term: domain
+    label: Domain
+    definition: >
+      The BigML deployment environment. Production is 'bigml.io'. The path component
+      'andromeda' identifies the current production environment version.
+    category: Authentication
+
+  # Status codes
+  - term: status_code
+    label: Status Code
+    definition: >
+      Integer representing the processing state of a resource:
+      1=queued, 2=started, 3=waiting, 4=processing, 5=finished, 0=unknown, -1=failed.
+    category: Resource Lifecycle
+    values:
+      - code: 1
+        name: QUEUED
+        description: The resource creation request is queued.
+      - code: 2
+        name: STARTED
+        description: The resource is being processed.
+      - code: 3
+        name: WAITING
+        description: The resource is waiting for a dependency.
+      - code: 4
+        name: PROCESSING
+        description: Intensive processing underway.
+      - code: 5
+        name: FINISHED
+        description: The resource is ready to use.
+      - code: 0
+        name: UNKNOWN
+        description: Unknown status.
+      - code: -1
+        name: FAILED
+        description: Resource creation failed.
+
+  - term: whizzml
+    label: WhizzML
+    definition: >
+      BigML's domain-specific language for automating machine learning workflows.
+      Based on Lisp/Clojure syntax, it supports resource creation, conditionals,
+      loops, and higher-order functions over BigML resources.
+    category: Automation
+    relatedTerms: [script, execution, library]

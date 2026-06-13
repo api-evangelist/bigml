@@ -1,0 +1,258 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/bigml/main/json-schema/bigml-resource.json",
+  "title": "BigML Resource",
+  "description": "Base schema for all BigML API resources.",
+  "type": "object",
+  "properties": {
+    "resource": {
+      "type": "string",
+      "description": "Fully-qualified resource identifier, e.g. 'source/5f1a2b3c4d5e6f7890abcdef'.",
+      "pattern": "^[a-z]+/[a-f0-9]{24}$"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the resource was created."
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the resource was last updated."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name for the resource."
+    },
+    "private": {
+      "type": "boolean",
+      "description": "Whether the resource is private (true) or public/shared (false).",
+      "default": true
+    },
+    "tags": {
+      "type": "array",
+      "description": "List of user-defined tags.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "$ref": "#/$defs/ResourceStatus"
+    }
+  },
+  "required": ["resource", "created", "updated", "status"],
+  "$defs": {
+    "ResourceStatus": {
+      "type": "object",
+      "title": "ResourceStatus",
+      "description": "Processing status of a BigML resource.",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "description": "Status code: 1=queued, 2=started, 3=waiting, 4=processing, 5=finished, 0=unknown, -1=failed.",
+          "enum": [-1, 0, 1, 2, 3, 4, 5]
+        },
+        "message": {
+          "type": "string",
+          "description": "Human-readable status message."
+        },
+        "elapsed": {
+          "type": "number",
+          "description": "Processing time in milliseconds.",
+          "minimum": 0
+        },
+        "progress": {
+          "type": "number",
+          "description": "Processing progress from 0.0 to 1.0.",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": ["code", "message"]
+    },
+    "Source": {
+      "allOf": [
+        {"$ref": "#"},
+        {
+          "title": "Source",
+          "description": "A BigML data source created from a file upload, URL, or inline data.",
+          "properties": {
+            "file_name": {
+              "type": "string",
+              "description": "Name of the uploaded file."
+            },
+            "size": {
+              "type": "integer",
+              "description": "File size in bytes.",
+              "minimum": 0
+            },
+            "rows": {
+              "type": "integer",
+              "description": "Number of rows in the source.",
+              "minimum": 0
+            },
+            "columns": {
+              "type": "integer",
+              "description": "Number of columns in the source.",
+              "minimum": 0
+            },
+            "fields": {
+              "type": "object",
+              "description": "Map of field IDs to field metadata.",
+              "additionalProperties": {
+                "$ref": "#/$defs/FieldMetadata"
+              }
+            },
+            "source_parser": {
+              "type": "object",
+              "description": "Parsing configuration (separator, header, encoding, etc.).",
+              "properties": {
+                "separator": {"type": "string"},
+                "header": {"type": "boolean"},
+                "encoding": {"type": "string"},
+                "missing_tokens": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Dataset": {
+      "allOf": [
+        {"$ref": "#"},
+        {
+          "title": "Dataset",
+          "description": "A BigML dataset derived from a source, suitable for training ML models.",
+          "properties": {
+            "source": {
+              "type": "string",
+              "description": "Source resource ID used to create this dataset.",
+              "pattern": "^source/[a-f0-9]{24}$"
+            },
+            "rows": {
+              "type": "integer",
+              "description": "Number of rows in the dataset.",
+              "minimum": 0
+            },
+            "columns": {
+              "type": "integer",
+              "description": "Number of columns.",
+              "minimum": 0
+            },
+            "fields": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/FieldMetadata"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "FieldMetadata": {
+      "type": "object",
+      "title": "FieldMetadata",
+      "description": "Metadata for a single field (column) in a source or dataset.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Field name as it appears in the original data."
+        },
+        "optype": {
+          "type": "string",
+          "description": "Operational type of the field.",
+          "enum": ["categorical", "numeric", "text", "items", "datetime", "image"]
+        },
+        "column_number": {
+          "type": "integer",
+          "description": "Zero-based column index."
+        },
+        "missing_count": {
+          "type": "integer",
+          "description": "Number of missing values.",
+          "minimum": 0
+        },
+        "summary": {
+          "type": "object",
+          "description": "Statistical summary of the field (min, max, mean, median, etc.)."
+        }
+      },
+      "required": ["name", "optype"]
+    },
+    "Prediction": {
+      "allOf": [
+        {"$ref": "#"},
+        {
+          "title": "Prediction",
+          "description": "A single prediction generated by a BigML model.",
+          "properties": {
+            "model": {
+              "type": "string",
+              "description": "Resource ID of the model, ensemble, deepnet, or regression used."
+            },
+            "input_data": {
+              "type": "object",
+              "description": "Map of field names or IDs to input values."
+            },
+            "output": {
+              "type": "string",
+              "description": "Name of the predicted field."
+            },
+            "prediction": {
+              "type": "object",
+              "description": "Prediction result, keyed by field name, with confidence or probability."
+            },
+            "confidence": {
+              "type": "number",
+              "description": "Confidence score for the prediction (0.0–1.0).",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        }
+      ]
+    },
+    "ListResponse": {
+      "type": "object",
+      "title": "ListResponse",
+      "description": "Paginated list response for any BigML resource collection.",
+      "properties": {
+        "meta": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer",
+              "description": "Number of resources per page."
+            },
+            "offset": {
+              "type": "integer",
+              "description": "Index of the first resource in this page."
+            },
+            "total_count": {
+              "type": "integer",
+              "description": "Total number of matching resources."
+            },
+            "previous": {
+              "type": ["string", "null"],
+              "description": "URL for the previous page, or null."
+            },
+            "next": {
+              "type": ["string", "null"],
+              "description": "URL for the next page, or null."
+            }
+          },
+          "required": ["limit", "offset", "total_count"]
+        },
+        "objects": {
+          "type": "array",
+          "description": "Array of resource objects.",
+          "items": {"$ref": "#"}
+        }
+      },
+      "required": ["meta", "objects"]
+    }
+  }
+}

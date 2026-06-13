@@ -1,0 +1,248 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "bigml": "https://bigml.com/api/",
+    "dc": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": "schema:url",
+    "created": {
+      "@id": "dc:created",
+      "@type": "xsd:dateTime"
+    },
+    "updated": {
+      "@id": "dc:modified",
+      "@type": "xsd:dateTime"
+    },
+
+    "BigMLResource": "bigml:Resource",
+    "resource": {
+      "@id": "bigml:resourceId",
+      "@type": "@id"
+    },
+    "status": "bigml:status",
+    "statusCode": "bigml:statusCode",
+    "tags": "schema:keywords",
+    "private": "schema:isAccessibleForFree",
+
+    "Source": {
+      "@id": "bigml:Source",
+      "@type": "@id"
+    },
+    "fileName": "schema:name",
+    "fileSize": "schema:fileSize",
+    "rows": "bigml:rows",
+    "columns": "bigml:columns",
+    "fields": "bigml:fields",
+    "sourceParser": "bigml:sourceParser",
+
+    "Dataset": {
+      "@id": "bigml:Dataset",
+      "@type": "@id"
+    },
+    "source": {
+      "@id": "bigml:derivedFrom",
+      "@type": "@id"
+    },
+
+    "Model": {
+      "@id": "bigml:Model",
+      "@type": "@id"
+    },
+    "dataset": {
+      "@id": "bigml:trainedOn",
+      "@type": "@id"
+    },
+    "objectiveField": "bigml:objectiveField",
+    "accuracy": "schema:ratingValue",
+
+    "Ensemble": {
+      "@id": "bigml:Ensemble",
+      "@type": "@id"
+    },
+    "models": {
+      "@id": "bigml:containsModel",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "numberOfModels": "bigml:numberOfModels",
+
+    "Prediction": {
+      "@id": "bigml:Prediction",
+      "@type": "@id"
+    },
+    "inputData": "bigml:inputData",
+    "prediction": "bigml:predictionResult",
+    "confidence": {
+      "@id": "bigml:confidence",
+      "@type": "xsd:float"
+    },
+
+    "Evaluation": {
+      "@id": "bigml:Evaluation",
+      "@type": "@id"
+    },
+    "result": "bigml:evaluationResult",
+
+    "Cluster": {
+      "@id": "bigml:Cluster",
+      "@type": "@id"
+    },
+    "k": "bigml:numberOfClusters",
+    "clusters": "bigml:clusterCenters",
+
+    "Centroid": {
+      "@id": "bigml:Centroid",
+      "@type": "@id"
+    },
+    "cluster": {
+      "@id": "bigml:assignedCluster",
+      "@type": "@id"
+    },
+    "centroidId": "bigml:centroidId",
+    "distance": {
+      "@id": "bigml:distanceToCenter",
+      "@type": "xsd:float"
+    },
+
+    "Anomaly": {
+      "@id": "bigml:AnomalyDetector",
+      "@type": "@id"
+    },
+    "topAnomalies": "bigml:topAnomalies",
+
+    "AnomalyScore": {
+      "@id": "bigml:AnomalyScore",
+      "@type": "@id"
+    },
+    "anomaly": {
+      "@id": "bigml:detectorUsed",
+      "@type": "@id"
+    },
+    "score": {
+      "@id": "bigml:anomalyScore",
+      "@type": "xsd:float"
+    },
+
+    "LogisticRegression": {
+      "@id": "bigml:LogisticRegression",
+      "@type": "@id"
+    },
+    "LinearRegression": {
+      "@id": "bigml:LinearRegression",
+      "@type": "@id"
+    },
+    "Deepnet": {
+      "@id": "bigml:Deepnet",
+      "@type": "@id"
+    },
+    "Fusion": {
+      "@id": "bigml:Fusion",
+      "@type": "@id"
+    },
+
+    "TimeSeries": {
+      "@id": "bigml:TimeSeries",
+      "@type": "@id"
+    },
+    "objectiveFields": {
+      "@id": "bigml:objectiveFields",
+      "@container": "@set"
+    },
+    "period": "bigml:period",
+
+    "Forecast": {
+      "@id": "bigml:Forecast",
+      "@type": "@id"
+    },
+    "timeSeries": {
+      "@id": "bigml:forecastedBy",
+      "@type": "@id"
+    },
+    "forecast": "bigml:forecastResult",
+
+    "TopicModel": {
+      "@id": "bigml:TopicModel",
+      "@type": "@id"
+    },
+    "numberOfTopics": "bigml:numberOfTopics",
+    "topics": "bigml:topics",
+
+    "Association": {
+      "@id": "bigml:Association",
+      "@type": "@id"
+    },
+    "rules": "bigml:associationRules",
+
+    "PCA": {
+      "@id": "bigml:PCA",
+      "@type": "@id"
+    },
+    "components": "bigml:principalComponents",
+
+    "BatchPrediction": {
+      "@id": "bigml:BatchPrediction",
+      "@type": "@id"
+    },
+    "BatchCentroid": {
+      "@id": "bigml:BatchCentroid",
+      "@type": "@id"
+    },
+    "BatchAnomalyScore": {
+      "@id": "bigml:BatchAnomalyScore",
+      "@type": "@id"
+    },
+    "outputDataset": {
+      "@id": "bigml:outputDataset",
+      "@type": "@id"
+    },
+
+    "Project": {
+      "@id": "schema:Project",
+      "@type": "@id"
+    },
+
+    "Script": {
+      "@id": "bigml:Script",
+      "@type": "@id"
+    },
+    "sourceCode": "schema:codeRepository",
+    "inputs": "bigml:scriptInputs",
+    "outputs": "bigml:scriptOutputs",
+
+    "Execution": {
+      "@id": "bigml:Execution",
+      "@type": "@id"
+    },
+    "script": {
+      "@id": "bigml:executedScript",
+      "@type": "@id"
+    },
+
+    "ExternalConnector": {
+      "@id": "bigml:ExternalConnector",
+      "@type": "@id"
+    },
+    "connection": "bigml:connectionConfig",
+    "sourceType": "bigml:sourceType",
+
+    "ListResponse": {
+      "@id": "bigml:ListResponse",
+      "@type": "@id"
+    },
+    "meta": "bigml:paginationMeta",
+    "objects": {
+      "@id": "bigml:items",
+      "@container": "@set"
+    },
+    "totalCount": "bigml:totalCount",
+    "limit": "bigml:limit",
+    "offset": "bigml:offset",
+    "next": "bigml:nextPage",
+    "previous": "bigml:previousPage"
+  }
+}

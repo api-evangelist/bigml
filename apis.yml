@@ -45,7 +45,13 @@ apis:
       - type: Documentation
         url: https://bigml.com/api/
       - type: OpenAPI
-        url: https://bigml.com/api/
+        url: https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/openapi/openapi.yml
+      - type: JSONSchema
+        url: https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+      - type: Vocabulary
+        url: https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+      - type: JSONLDContext
+        url: https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
     contact:
       - FN: BigML Support
         url: https://support.bigml.com/

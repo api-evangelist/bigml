@@ -1,0 +1,33 @@
+{
+  "title": "Create a Dataset from a Source",
+  "description": "Convert a BigML source into a dataset ready for training ML models.",
+  "request": {
+    "method": "POST",
+    "url": "https://bigml.io/andromeda/dataset?username=myuser&api_key=a1b2c3d4e5f6789012345678",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "source": "source/5f1a2b3c4d5e6f7890abcdef",
+      "name": "Iris Training Dataset"
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "resource": "dataset/5f1a2b3c4d5e6f7890abcde0",
+      "name": "Iris Training Dataset",
+      "created": "2026-06-13T12:01:00.000Z",
+      "updated": "2026-06-13T12:01:00.000Z",
+      "private": true,
+      "source": "source/5f1a2b3c4d5e6f7890abcdef",
+      "rows": 150,
+      "columns": 5,
+      "status": {
+        "code": 5,
+        "message": "The dataset has been created",
+        "elapsed": 987
+      }
+    }
+  }
+}

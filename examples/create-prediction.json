@@ -1,0 +1,45 @@
+{
+  "title": "Create a Prediction",
+  "description": "Generate a single prediction from a trained BigML model given input field values.",
+  "request": {
+    "method": "POST",
+    "url": "https://bigml.io/andromeda/prediction?username=myuser&api_key=a1b2c3d4e5f6789012345678",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "model": "model/5f1a2b3c4d5e6f7890abcde1",
+      "input_data": {
+        "sepal length": 5.1,
+        "sepal width": 3.5,
+        "petal length": 1.4,
+        "petal width": 0.2
+      }
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "resource": "prediction/5f1a2b3c4d5e6f7890abcde2",
+      "created": "2026-06-13T12:03:00.000Z",
+      "updated": "2026-06-13T12:03:00.000Z",
+      "model": "model/5f1a2b3c4d5e6f7890abcde1",
+      "input_data": {
+        "000000": 5.1,
+        "000001": 3.5,
+        "000002": 1.4,
+        "000003": 0.2
+      },
+      "output": "species",
+      "prediction": {
+        "species": "Iris-setosa"
+      },
+      "confidence": 0.9284,
+      "status": {
+        "code": 5,
+        "message": "The prediction has been created",
+        "elapsed": 12
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "title": "Create a Source from a Remote URL",
+  "description": "Upload a publicly-accessible CSV file as a BigML data source.",
+  "request": {
+    "method": "POST",
+    "url": "https://bigml.io/andromeda/source?username=myuser&api_key=a1b2c3d4e5f6789012345678",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "remote": "https://static.bigml.com/csv/iris.csv",
+      "name": "Iris Dataset",
+      "tags": ["iris", "demo", "classification"],
+      "source_parser": {
+        "header": true,
+        "separator": ","
+      }
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "resource": "source/5f1a2b3c4d5e6f7890abcdef",
+      "name": "Iris Dataset",
+      "created": "2026-06-13T12:00:00.000Z",
+      "updated": "2026-06-13T12:00:01.000Z",
+      "private": true,
+      "tags": ["iris", "demo", "classification"],
+      "status": {
+        "code": 1,
+        "message": "The source is being created",
+        "elapsed": 0
+      },
+      "file_name": "iris.csv",
+      "size": 4608
+    }
+  }
+}
