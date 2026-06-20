@@ -6,7 +6,7 @@ description: >
   managing ML workflows. The platform supports supervised and unsupervised learning
   including decision trees, ensembles, deepnets, linear and logistic regression,
   clustering, anomaly detection, topic models, and time series forecasting.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -32,7 +32,7 @@ apis:
       clusters, anomaly detectors, topic models, time series forecasters, and
       generate predictions — both individual and batch — over HTTPS using
       username and API key authentication.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://bigml.com/api/
     baseURL: https://bigml.io
     tags:
