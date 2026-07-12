@@ -1,0 +1,26 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: bigml.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  4 22:11:30 2026 GMT
+  hsts: false
+- host: bigml.io
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  3 22:39:15 2026 GMT
+  hsts: null
+domains:
+- domain: bigml.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+- domain: bigml.io
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false

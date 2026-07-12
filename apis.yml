@@ -58,6 +58,10 @@ apis:
 
 common:
 
+  - type: DomainSecurity
+    url: security/bigml-domain-security.yml
+  - type: Authentication
+    url: authentication/bigml-authentication.yml
   - type: Website
     url: https://bigml.com/
 

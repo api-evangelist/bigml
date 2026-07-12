@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - query
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: query
+  parameter: username
+  description: 'Authenticate with username and api_key as query parameters. Example: ?username=myuser&api_key=a1b2c3...'
+  sources:
+  - openapi/openapi.yml
