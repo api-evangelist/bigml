@@ -58,6 +58,8 @@ apis:
 
 common:
 
+  - type: AgenticAccess
+    url: agentic-access/bigml-agentic-access.yml
   - type: DomainSecurity
     url: security/bigml-domain-security.yml
   - type: Authentication
