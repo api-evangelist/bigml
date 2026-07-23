@@ -1,0 +1,262 @@
+openapi: 3.0.3
+info:
+  title: BigML REST Anomaly Detection Models API
+  description: 'The BigML REST API provides programmatic access to the full BigML machine learning platform. Create and manage sources, datasets, models, ensembles, clusters, anomaly detectors, topic models, time series forecasters, deepnets, linear and logistic regression models, PCA, and generate predictions — both individual and batch — over HTTPS using username and API key authentication.
+
+    '
+  version: 1.0.0
+  contact:
+    name: BigML Support
+    url: https://support.bigml.com/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-api-id: bigml:bigml-api
+  x-provider: https://bigml.com/
+servers:
+- url: https://bigml.io/andromeda
+  description: BigML production API (use username/api_key query params)
+security:
+- ApiKeyAuth: []
+tags:
+- name: Models
+  description: Train and manage decision tree models
+paths:
+  /model:
+    get:
+      summary: List Models
+      operationId: listModels
+      tags:
+      - Models
+      parameters:
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of models
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a Model
+      operationId: createModel
+      tags:
+      - Models
+      parameters:
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - dataset
+              properties:
+                dataset:
+                  type: string
+                  description: Dataset resource ID.
+                objective_field:
+                  type: string
+                  description: Field to predict.
+                name:
+                  type: string
+      responses:
+        '201':
+          description: Model created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+  /model/{resource_id}:
+    parameters:
+    - $ref: '#/components/parameters/resourceId'
+    - $ref: '#/components/parameters/username'
+    - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Model
+      operationId: getModel
+      tags:
+      - Models
+      responses:
+        '200':
+          description: Model details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+    put:
+      summary: Update a Model
+      operationId: updateModel
+      tags:
+      - Models
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Model updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+    delete:
+      summary: Delete a Model
+      operationId: deleteModel
+      tags:
+      - Models
+      responses:
+        '204':
+          description: Model deleted
+components:
+  schemas:
+    ResourceStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: HTTP-style status code (1=queued,2=started,3=waiting,4=processing,5=finished,0=unknown,-1=failed)
+        message:
+          type: string
+        elapsed:
+          type: number
+          description: Processing time in milliseconds.
+    ResourceBase:
+      type: object
+      properties:
+        resource:
+          type: string
+          description: Resource identifier (e.g., source/5f1a2b3c4d5e6f7890abcdef)
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/ResourceStatus'
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        private:
+          type: boolean
+    Model:
+      allOf:
+      - $ref: '#/components/schemas/ResourceBase'
+      - type: object
+        properties:
+          dataset:
+            type: string
+          objective_field:
+            type: string
+          model:
+            type: object
+            description: The decision tree model structure.
+          accuracy:
+            type: number
+    ListResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            limit:
+              type: integer
+            offset:
+              type: integer
+            total_count:
+              type: integer
+            previous:
+              type: string
+              nullable: true
+            next:
+              type: string
+              nullable: true
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceBase'
+  parameters:
+    apiKey:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML API key.
+    username:
+      name: username
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML username.
+    resourceId:
+      name: resource_id
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: ^[a-f0-9]{24}$
+      description: The 24-character hexadecimal resource identifier.
+    limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 20
+        maximum: 1000
+      description: Number of resources to return.
+    offset:
+      name: offset
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 0
+      description: Index of the first resource to return.
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: username
+      description: 'Authenticate with username and api_key as query parameters. Example: ?username=myuser&api_key=a1b2c3...
+
+        '
+x-tagGroups:
+- name: Data Management
+  tags:
+  - Sources
+  - Datasets
+  - Projects
+  - Data Connectors
+- name: Supervised Learning
+  tags:
+  - Models
+  - Ensembles
+  - Supervised Learning
+  - Evaluations
+  - Predictions
+- name: Unsupervised Learning
+  tags:
+  - Clustering
+  - Anomaly Detection
+  - Unsupervised Learning
+  - Time Series
+- name: Batch Operations
+  tags:
+  - Batch Operations
+- name: Automation
+  tags:
+  - WhizzML Scripting

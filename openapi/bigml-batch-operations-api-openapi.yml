@@ -1,0 +1,374 @@
+openapi: 3.0.3
+info:
+  title: BigML REST Anomaly Detection Batch Operations API
+  description: 'The BigML REST API provides programmatic access to the full BigML machine learning platform. Create and manage sources, datasets, models, ensembles, clusters, anomaly detectors, topic models, time series forecasters, deepnets, linear and logistic regression models, PCA, and generate predictions — both individual and batch — over HTTPS using username and API key authentication.
+
+    '
+  version: 1.0.0
+  contact:
+    name: BigML Support
+    url: https://support.bigml.com/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-api-id: bigml:bigml-api
+  x-provider: https://bigml.com/
+servers:
+- url: https://bigml.io/andromeda
+  description: BigML production API (use username/api_key query params)
+security:
+- ApiKeyAuth: []
+tags:
+- name: Batch Operations
+  description: Run predictions, centroid assignments, and anomaly scoring on full datasets
+paths:
+  /batchprediction:
+    get:
+      summary: List Batch Predictions
+      operationId: listBatchPredictions
+      tags:
+      - Batch Operations
+      parameters:
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of batch predictions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a Batch Prediction
+      operationId: createBatchPrediction
+      tags:
+      - Batch Operations
+      parameters:
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - model
+              - dataset
+              properties:
+                model:
+                  type: string
+                dataset:
+                  type: string
+                output_fields:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '201':
+          description: Batch prediction created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchPrediction'
+  /batchprediction/{resource_id}:
+    parameters:
+    - $ref: '#/components/parameters/resourceId'
+    - $ref: '#/components/parameters/username'
+    - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Batch Prediction
+      operationId: getBatchPrediction
+      tags:
+      - Batch Operations
+      responses:
+        '200':
+          description: Batch prediction details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchPrediction'
+    delete:
+      summary: Delete a Batch Prediction
+      operationId: deleteBatchPrediction
+      tags:
+      - Batch Operations
+      responses:
+        '204':
+          description: Batch prediction deleted
+  /batchcentroid:
+    post:
+      summary: Create a Batch Centroid
+      operationId: createBatchCentroid
+      tags:
+      - Batch Operations
+      parameters:
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - cluster
+              - dataset
+              properties:
+                cluster:
+                  type: string
+                dataset:
+                  type: string
+      responses:
+        '201':
+          description: Batch centroid created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchCentroid'
+  /batchcentroid/{resource_id}:
+    parameters:
+    - $ref: '#/components/parameters/resourceId'
+    - $ref: '#/components/parameters/username'
+    - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Batch Centroid
+      operationId: getBatchCentroid
+      tags:
+      - Batch Operations
+      responses:
+        '200':
+          description: Batch centroid details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchCentroid'
+    delete:
+      summary: Delete a Batch Centroid
+      operationId: deleteBatchCentroid
+      tags:
+      - Batch Operations
+      responses:
+        '204':
+          description: Batch centroid deleted
+  /batchanomalyscore:
+    post:
+      summary: Create a Batch Anomaly Score
+      operationId: createBatchAnomalyScore
+      tags:
+      - Batch Operations
+      parameters:
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - anomaly
+              - dataset
+              properties:
+                anomaly:
+                  type: string
+                dataset:
+                  type: string
+      responses:
+        '201':
+          description: Batch anomaly score created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchAnomalyScore'
+  /batchanomalyscore/{resource_id}:
+    parameters:
+    - $ref: '#/components/parameters/resourceId'
+    - $ref: '#/components/parameters/username'
+    - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Batch Anomaly Score
+      operationId: getBatchAnomalyScore
+      tags:
+      - Batch Operations
+      responses:
+        '200':
+          description: Batch anomaly score details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchAnomalyScore'
+    delete:
+      summary: Delete a Batch Anomaly Score
+      operationId: deleteBatchAnomalyScore
+      tags:
+      - Batch Operations
+      responses:
+        '204':
+          description: Batch anomaly score deleted
+components:
+  schemas:
+    ResourceStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: HTTP-style status code (1=queued,2=started,3=waiting,4=processing,5=finished,0=unknown,-1=failed)
+        message:
+          type: string
+        elapsed:
+          type: number
+          description: Processing time in milliseconds.
+    BatchCentroid:
+      allOf:
+      - $ref: '#/components/schemas/ResourceBase'
+      - type: object
+        properties:
+          cluster:
+            type: string
+          dataset:
+            type: string
+          output_dataset:
+            type: string
+    BatchAnomalyScore:
+      allOf:
+      - $ref: '#/components/schemas/ResourceBase'
+      - type: object
+        properties:
+          anomaly:
+            type: string
+          dataset:
+            type: string
+          output_dataset:
+            type: string
+    ResourceBase:
+      type: object
+      properties:
+        resource:
+          type: string
+          description: Resource identifier (e.g., source/5f1a2b3c4d5e6f7890abcdef)
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/ResourceStatus'
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        private:
+          type: boolean
+    ListResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            limit:
+              type: integer
+            offset:
+              type: integer
+            total_count:
+              type: integer
+            previous:
+              type: string
+              nullable: true
+            next:
+              type: string
+              nullable: true
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceBase'
+    BatchPrediction:
+      allOf:
+      - $ref: '#/components/schemas/ResourceBase'
+      - type: object
+        properties:
+          model:
+            type: string
+          dataset:
+            type: string
+          output_dataset:
+            type: string
+  parameters:
+    apiKey:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML API key.
+    username:
+      name: username
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML username.
+    resourceId:
+      name: resource_id
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: ^[a-f0-9]{24}$
+      description: The 24-character hexadecimal resource identifier.
+    limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 20
+        maximum: 1000
+      description: Number of resources to return.
+    offset:
+      name: offset
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 0
+      description: Index of the first resource to return.
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: username
+      description: 'Authenticate with username and api_key as query parameters. Example: ?username=myuser&api_key=a1b2c3...
+
+        '
+x-tagGroups:
+- name: Data Management
+  tags:
+  - Sources
+  - Datasets
+  - Projects
+  - Data Connectors
+- name: Supervised Learning
+  tags:
+  - Models
+  - Ensembles
+  - Supervised Learning
+  - Evaluations
+  - Predictions
+- name: Unsupervised Learning
+  tags:
+  - Clustering
+  - Anomaly Detection
+  - Unsupervised Learning
+  - Time Series
+- name: Batch Operations
+  tags:
+  - Batch Operations
+- name: Automation
+  tags:
+  - WhizzML Scripting
