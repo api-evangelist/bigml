@@ -6,7 +6,20 @@ description: >
   managing ML workflows. The platform supports supervised and unsupervised learning
   including decision trees, ensembles, deepnets, linear and logistic regression,
   clustering, anomaly detection, topic models, and time series forecasting.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigml.png
 url: https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -23,39 +36,321 @@ tags:
   - Deep Learning
 
 apis:
-
-  - aid: bigml:bigml-api
-    name: BigML REST API
-    description: >
-      The BigML REST API provides programmatic access to the full BigML machine
-      learning platform. Create and manage sources, datasets, models, ensembles,
-      clusters, anomaly detectors, topic models, time series forecasters, and
-      generate predictions — both individual and batch — over HTTPS using
-      username and API key authentication.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://bigml.com/api/
-    baseURL: https://bigml.io
-    tags:
-      - Machine Learning
-      - Predictions
-      - Datasets
-      - Models
-      - REST API
-    properties:
-      - type: Documentation
-        url: https://bigml.com/api/
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/openapi/openapi.yml
-      - type: JSONSchema
-        url: https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
-      - type: Vocabulary
-        url: https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
-      - type: JSONLDContext
-        url: https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
-    contact:
-      - FN: BigML Support
-        url: https://support.bigml.com/
-
+- aid: bigml:bigml-anomaly-detection-api
+  name: BigML Anomaly Detection API
+  description: Detect anomalies in datasets using Isolation Forest
+  humanURL: https://bigml.com/api/
+  baseURL: https://bigml.io
+  tags:
+  - Anomaly Detection
+  properties:
+  - type: OpenAPI
+    url: openapi/bigml-anomaly-detection-api-openapi.yml
+  - type: Documentation
+    url: https://bigml.com/api/
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
+- aid: bigml:bigml-batch-operations-api
+  name: BigML Batch Operations API
+  description: Run predictions, centroid assignments, and anomaly scoring on full datasets
+  humanURL: https://bigml.com/api/
+  baseURL: https://bigml.io
+  tags:
+  - Batch Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/bigml-batch-operations-api-openapi.yml
+  - type: Documentation
+    url: https://bigml.com/api/
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
+- aid: bigml:bigml-clustering-api
+  name: BigML Clustering API
+  description: Create unsupervised cluster models and assign centroids
+  humanURL: https://bigml.com/api/
+  baseURL: https://bigml.io
+  tags:
+  - Clustering
+  properties:
+  - type: OpenAPI
+    url: openapi/bigml-clustering-api-openapi.yml
+  - type: Documentation
+    url: https://bigml.com/api/
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
+- aid: bigml:bigml-data-connectors-api
+  name: BigML Data Connectors API
+  description: Connect to external databases and data sources
+  humanURL: https://bigml.com/api/
+  baseURL: https://bigml.io
+  tags:
+  - Data Connectors
+  properties:
+  - type: OpenAPI
+    url: openapi/bigml-data-connectors-api-openapi.yml
+  - type: Documentation
+    url: https://bigml.com/api/
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
+- aid: bigml:bigml-datasets-api
+  name: BigML Datasets API
+  description: Create and manage training datasets from sources
+  humanURL: https://bigml.com/api/
+  baseURL: https://bigml.io
+  tags:
+  - Datasets
+  properties:
+  - type: OpenAPI
+    url: openapi/bigml-datasets-api-openapi.yml
+  - type: Documentation
+    url: https://bigml.com/api/
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
+- aid: bigml:bigml-ensembles-api
+  name: BigML Ensembles API
+  description: Train and manage ensemble models (random forests, gradient boosted trees)
+  humanURL: https://bigml.com/api/
+  baseURL: https://bigml.io
+  tags:
+  - Ensembles
+  properties:
+  - type: OpenAPI
+    url: openapi/bigml-ensembles-api-openapi.yml
+  - type: Documentation
+    url: https://bigml.com/api/
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
+- aid: bigml:bigml-evaluations-api
+  name: BigML Evaluations API
+  description: Evaluate model performance against a test dataset
+  humanURL: https://bigml.com/api/
+  baseURL: https://bigml.io
+  tags:
+  - Evaluations
+  properties:
+  - type: OpenAPI
+    url: openapi/bigml-evaluations-api-openapi.yml
+  - type: Documentation
+    url: https://bigml.com/api/
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
+- aid: bigml:bigml-models-api
+  name: BigML Models API
+  description: Train and manage decision tree models
+  humanURL: https://bigml.com/api/
+  baseURL: https://bigml.io
+  tags:
+  - Models
+  properties:
+  - type: OpenAPI
+    url: openapi/bigml-models-api-openapi.yml
+  - type: Documentation
+    url: https://bigml.com/api/
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
+- aid: bigml:bigml-predictions-api
+  name: BigML Predictions API
+  description: Generate individual predictions from trained models
+  humanURL: https://bigml.com/api/
+  baseURL: https://bigml.io
+  tags:
+  - Predictions
+  properties:
+  - type: OpenAPI
+    url: openapi/bigml-predictions-api-openapi.yml
+  - type: Documentation
+    url: https://bigml.com/api/
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
+- aid: bigml:bigml-projects-api
+  name: BigML Projects API
+  description: Organize resources into projects
+  humanURL: https://bigml.com/api/
+  baseURL: https://bigml.io
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/bigml-projects-api-openapi.yml
+  - type: Documentation
+    url: https://bigml.com/api/
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
+- aid: bigml:bigml-sources-api
+  name: BigML Sources API
+  description: Upload and manage raw data sources (CSV, JSON, Excel, etc.)
+  humanURL: https://bigml.com/api/
+  baseURL: https://bigml.io
+  tags:
+  - Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/bigml-sources-api-openapi.yml
+  - type: Documentation
+    url: https://bigml.com/api/
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
+- aid: bigml:bigml-supervised-learning-api
+  name: BigML Supervised Learning API
+  description: Logistic regression, linear regression, and deep neural network models
+  humanURL: https://bigml.com/api/
+  baseURL: https://bigml.io
+  tags:
+  - Supervised Learning
+  properties:
+  - type: OpenAPI
+    url: openapi/bigml-supervised-learning-api-openapi.yml
+  - type: Documentation
+    url: https://bigml.com/api/
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
+- aid: bigml:bigml-time-series-api
+  name: BigML Time Series API
+  description: Time series forecasting models and forecasts
+  humanURL: https://bigml.com/api/
+  baseURL: https://bigml.io
+  tags:
+  - Time Series
+  properties:
+  - type: OpenAPI
+    url: openapi/bigml-time-series-api-openapi.yml
+  - type: Documentation
+    url: https://bigml.com/api/
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
+- aid: bigml:bigml-unsupervised-learning-api
+  name: BigML Unsupervised Learning API
+  description: Topic models, association rules, and PCA
+  humanURL: https://bigml.com/api/
+  baseURL: https://bigml.io
+  tags:
+  - Unsupervised Learning
+  properties:
+  - type: OpenAPI
+    url: openapi/bigml-unsupervised-learning-api-openapi.yml
+  - type: Documentation
+    url: https://bigml.com/api/
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
+- aid: bigml:bigml-whizzml-scripting-api
+  name: BigML WhizzML Scripting API
+  description: Automate ML workflows with WhizzML scripts and executions
+  humanURL: https://bigml.com/api/
+  baseURL: https://bigml.io
+  tags:
+  - WhizzML Scripting
+  properties:
+  - type: OpenAPI
+    url: openapi/bigml-whizzml-scripting-api-openapi.yml
+  - type: Documentation
+    url: https://bigml.com/api/
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
 common:
 
   - type: AgenticAccess
