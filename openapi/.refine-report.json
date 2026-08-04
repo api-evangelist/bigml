@@ -1,0 +1,42 @@
+{
+  "provider": "bigml",
+  "sources": [
+    "bigml-anomaly-detection-api-openapi.yml",
+    "bigml-batch-operations-api-openapi.yml",
+    "bigml-clustering-api-openapi.yml",
+    "bigml-data-connectors-api-openapi.yml",
+    "bigml-datasets-api-openapi.yml",
+    "bigml-ensembles-api-openapi.yml",
+    "bigml-evaluations-api-openapi.yml",
+    "bigml-models-api-openapi.yml",
+    "bigml-predictions-api-openapi.yml",
+    "bigml-projects-api-openapi.yml",
+    "bigml-sources-api-openapi.yml",
+    "bigml-supervised-learning-api-openapi.yml",
+    "bigml-time-series-api-openapi.yml",
+    "bigml-unsupervised-learning-api-openapi.yml",
+    "bigml-whizzml-scripting-api-openapi.yml"
+  ],
+  "outputs": [
+    "bigml-anomaly-detection-api-openapi.yml",
+    "bigml-batch-operations-api-openapi.yml",
+    "bigml-clustering-api-openapi.yml",
+    "bigml-data-connectors-api-openapi.yml",
+    "bigml-datasets-api-openapi.yml",
+    "bigml-ensembles-api-openapi.yml",
+    "bigml-evaluations-api-openapi.yml",
+    "bigml-models-api-openapi.yml",
+    "bigml-predictions-api-openapi.yml",
+    "bigml-projects-api-openapi.yml",
+    "bigml-sources-api-openapi.yml",
+    "bigml-supervised-learning-api-openapi.yml",
+    "bigml-time-series-api-openapi.yml",
+    "bigml-unsupervised-learning-api-openapi.yml",
+    "bigml-whizzml-scripting-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

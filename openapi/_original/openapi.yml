@@ -1,0 +1,2440 @@
+openapi: 3.0.3
+info:
+  title: BigML REST API
+  description: >
+    The BigML REST API provides programmatic access to the full BigML machine
+    learning platform. Create and manage sources, datasets, models, ensembles,
+    clusters, anomaly detectors, topic models, time series forecasters, deepnets,
+    linear and logistic regression models, PCA, and generate predictions — both
+    individual and batch — over HTTPS using username and API key authentication.
+  version: "1.0.0"
+  contact:
+    name: BigML Support
+    url: https://support.bigml.com/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-api-id: bigml:bigml-api
+  x-provider: https://bigml.com/
+
+servers:
+  - url: https://bigml.io/andromeda
+    description: BigML production API (use username/api_key query params)
+
+security:
+  - ApiKeyAuth: []
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: username
+      description: >
+        Authenticate with username and api_key as query parameters.
+        Example: ?username=myuser&api_key=a1b2c3...
+
+  parameters:
+    resourceId:
+      name: resource_id
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: '^[a-f0-9]{24}$'
+      description: The 24-character hexadecimal resource identifier.
+
+    username:
+      name: username
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML username.
+
+    apiKey:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML API key.
+
+    limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 20
+        maximum: 1000
+      description: Number of resources to return.
+
+    offset:
+      name: offset
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 0
+      description: Index of the first resource to return.
+
+    order_by:
+      name: order_by
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Field to sort results by. Prefix with - for descending order.
+
+  schemas:
+    ResourceStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: HTTP-style status code (1=queued,2=started,3=waiting,4=processing,5=finished,0=unknown,-1=failed)
+        message:
+          type: string
+        elapsed:
+          type: number
+          description: Processing time in milliseconds.
+
+    ResourceBase:
+      type: object
+      properties:
+        resource:
+          type: string
+          description: Resource identifier (e.g., source/5f1a2b3c4d5e6f7890abcdef)
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/ResourceStatus'
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        private:
+          type: boolean
+
+    Source:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            file_name:
+              type: string
+            size:
+              type: integer
+              description: File size in bytes.
+            rows:
+              type: integer
+            fields:
+              type: object
+              additionalProperties:
+                type: object
+            source_parser:
+              type: object
+
+    Dataset:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            source:
+              type: string
+              description: Source resource ID used to create this dataset.
+            rows:
+              type: integer
+            columns:
+              type: integer
+            fields:
+              type: object
+              additionalProperties:
+                type: object
+
+    Model:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            dataset:
+              type: string
+            objective_field:
+              type: string
+            model:
+              type: object
+              description: The decision tree model structure.
+            accuracy:
+              type: number
+
+    Ensemble:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            dataset:
+              type: string
+            models:
+              type: array
+              items:
+                type: string
+            number_of_models:
+              type: integer
+
+    Prediction:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            model:
+              type: string
+            input_data:
+              type: object
+            output:
+              type: string
+            prediction:
+              type: object
+
+    Evaluation:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            model:
+              type: string
+            dataset:
+              type: string
+            result:
+              type: object
+
+    Cluster:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            dataset:
+              type: string
+            k:
+              type: integer
+            clusters:
+              type: object
+
+    Centroid:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            cluster:
+              type: string
+            input_data:
+              type: object
+            centroid_id:
+              type: string
+            distance:
+              type: number
+
+    Anomaly:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            dataset:
+              type: string
+            top_anomalies:
+              type: integer
+
+    AnomalyScore:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            anomaly:
+              type: string
+            input_data:
+              type: object
+            score:
+              type: number
+
+    LogisticRegression:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            dataset:
+              type: string
+            objective_field:
+              type: string
+            coefficients:
+              type: array
+              items:
+                type: array
+                items:
+                  type: number
+
+    LinearRegression:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            dataset:
+              type: string
+            objective_field:
+              type: string
+            coefficients:
+              type: array
+              items:
+                type: number
+
+    Deepnet:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            dataset:
+              type: string
+            objective_field:
+              type: string
+            network:
+              type: object
+
+    TimeSeries:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            dataset:
+              type: string
+            objective_fields:
+              type: array
+              items:
+                type: string
+            period:
+              type: integer
+
+    TopicModel:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            dataset:
+              type: string
+            number_of_topics:
+              type: integer
+            topics:
+              type: array
+              items:
+                type: object
+
+    Association:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            dataset:
+              type: string
+            rules:
+              type: array
+              items:
+                type: object
+
+    PCA:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            dataset:
+              type: string
+            components:
+              type: array
+              items:
+                type: object
+
+    BatchPrediction:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            model:
+              type: string
+            dataset:
+              type: string
+            output_dataset:
+              type: string
+
+    BatchCentroid:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            cluster:
+              type: string
+            dataset:
+              type: string
+            output_dataset:
+              type: string
+
+    BatchAnomalyScore:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            anomaly:
+              type: string
+            dataset:
+              type: string
+            output_dataset:
+              type: string
+
+    Project:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            description:
+              type: string
+
+    Script:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            source_code:
+              type: string
+            inputs:
+              type: array
+              items:
+                type: object
+            outputs:
+              type: array
+              items:
+                type: object
+
+    Execution:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            script:
+              type: string
+            inputs:
+              type: array
+              items:
+                type: object
+            outputs:
+              type: array
+              items:
+                type: object
+
+    ExternalConnector:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            connection:
+              type: object
+            source_type:
+              type: string
+
+    Forecast:
+      allOf:
+        - $ref: '#/components/schemas/ResourceBase'
+        - type: object
+          properties:
+            time_series:
+              type: string
+            input_data:
+              type: object
+            forecast:
+              type: object
+
+    ListResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            limit:
+              type: integer
+            offset:
+              type: integer
+            total_count:
+              type: integer
+            previous:
+              type: string
+              nullable: true
+            next:
+              type: string
+              nullable: true
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceBase'
+
+paths:
+  /source:
+    get:
+      summary: List Sources
+      operationId: listSources
+      tags: [Sources]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/order_by'
+      responses:
+        '200':
+          description: List of sources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a Source
+      operationId: createSource
+      tags: [Sources]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The data file to upload.
+                name:
+                  type: string
+                data:
+                  type: string
+                  description: Inline CSV data.
+                remote:
+                  type: string
+                  format: uri
+                  description: URL of a remote file to import.
+      responses:
+        '201':
+          description: Source created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+
+  /source/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Source
+      operationId: getSource
+      tags: [Sources]
+      responses:
+        '200':
+          description: Source details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+    put:
+      summary: Update a Source
+      operationId: updateSource
+      tags: [Sources]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Source updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Source'
+    delete:
+      summary: Delete a Source
+      operationId: deleteSource
+      tags: [Sources]
+      responses:
+        '204':
+          description: Source deleted
+
+  /dataset:
+    get:
+      summary: List Datasets
+      operationId: listDatasets
+      tags: [Datasets]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of datasets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a Dataset
+      operationId: createDataset
+      tags: [Datasets]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [source]
+              properties:
+                source:
+                  type: string
+                  description: Source resource ID.
+                name:
+                  type: string
+                size:
+                  type: integer
+                  description: Maximum number of rows.
+      responses:
+        '201':
+          description: Dataset created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dataset'
+
+  /dataset/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Dataset
+      operationId: getDataset
+      tags: [Datasets]
+      responses:
+        '200':
+          description: Dataset details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dataset'
+    put:
+      summary: Update a Dataset
+      operationId: updateDataset
+      tags: [Datasets]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Dataset updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dataset'
+    delete:
+      summary: Delete a Dataset
+      operationId: deleteDataset
+      tags: [Datasets]
+      responses:
+        '204':
+          description: Dataset deleted
+
+  /model:
+    get:
+      summary: List Models
+      operationId: listModels
+      tags: [Models]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of models
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a Model
+      operationId: createModel
+      tags: [Models]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [dataset]
+              properties:
+                dataset:
+                  type: string
+                  description: Dataset resource ID.
+                objective_field:
+                  type: string
+                  description: Field to predict.
+                name:
+                  type: string
+      responses:
+        '201':
+          description: Model created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+
+  /model/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Model
+      operationId: getModel
+      tags: [Models]
+      responses:
+        '200':
+          description: Model details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+    put:
+      summary: Update a Model
+      operationId: updateModel
+      tags: [Models]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Model updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+    delete:
+      summary: Delete a Model
+      operationId: deleteModel
+      tags: [Models]
+      responses:
+        '204':
+          description: Model deleted
+
+  /ensemble:
+    get:
+      summary: List Ensembles
+      operationId: listEnsembles
+      tags: [Ensembles]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of ensembles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create an Ensemble
+      operationId: createEnsemble
+      tags: [Ensembles]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [dataset]
+              properties:
+                dataset:
+                  type: string
+                number_of_models:
+                  type: integer
+                  default: 10
+                objective_field:
+                  type: string
+      responses:
+        '201':
+          description: Ensemble created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ensemble'
+
+  /ensemble/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get an Ensemble
+      operationId: getEnsemble
+      tags: [Ensembles]
+      responses:
+        '200':
+          description: Ensemble details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ensemble'
+    put:
+      summary: Update an Ensemble
+      operationId: updateEnsemble
+      tags: [Ensembles]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Ensemble updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ensemble'
+    delete:
+      summary: Delete an Ensemble
+      operationId: deleteEnsemble
+      tags: [Ensembles]
+      responses:
+        '204':
+          description: Ensemble deleted
+
+  /prediction:
+    get:
+      summary: List Predictions
+      operationId: listPredictions
+      tags: [Predictions]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of predictions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a Prediction
+      operationId: createPrediction
+      tags: [Predictions]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [model, input_data]
+              properties:
+                model:
+                  type: string
+                  description: Model, ensemble, deepnet, logistic regression, or linear regression resource ID.
+                input_data:
+                  type: object
+                  description: Map of field names/IDs to input values.
+      responses:
+        '201':
+          description: Prediction created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Prediction'
+
+  /prediction/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Prediction
+      operationId: getPrediction
+      tags: [Predictions]
+      responses:
+        '200':
+          description: Prediction details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Prediction'
+    delete:
+      summary: Delete a Prediction
+      operationId: deletePrediction
+      tags: [Predictions]
+      responses:
+        '204':
+          description: Prediction deleted
+
+  /evaluation:
+    get:
+      summary: List Evaluations
+      operationId: listEvaluations
+      tags: [Evaluations]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of evaluations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create an Evaluation
+      operationId: createEvaluation
+      tags: [Evaluations]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [model, dataset]
+              properties:
+                model:
+                  type: string
+                dataset:
+                  type: string
+      responses:
+        '201':
+          description: Evaluation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evaluation'
+
+  /evaluation/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get an Evaluation
+      operationId: getEvaluation
+      tags: [Evaluations]
+      responses:
+        '200':
+          description: Evaluation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evaluation'
+    delete:
+      summary: Delete an Evaluation
+      operationId: deleteEvaluation
+      tags: [Evaluations]
+      responses:
+        '204':
+          description: Evaluation deleted
+
+  /cluster:
+    get:
+      summary: List Clusters
+      operationId: listClusters
+      tags: [Clustering]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of clusters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a Cluster
+      operationId: createCluster
+      tags: [Clustering]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [dataset]
+              properties:
+                dataset:
+                  type: string
+                k:
+                  type: integer
+                  description: Number of clusters.
+      responses:
+        '201':
+          description: Cluster created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cluster'
+
+  /cluster/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Cluster
+      operationId: getCluster
+      tags: [Clustering]
+      responses:
+        '200':
+          description: Cluster details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cluster'
+    put:
+      summary: Update a Cluster
+      operationId: updateCluster
+      tags: [Clustering]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Cluster updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cluster'
+    delete:
+      summary: Delete a Cluster
+      operationId: deleteCluster
+      tags: [Clustering]
+      responses:
+        '204':
+          description: Cluster deleted
+
+  /centroid:
+    post:
+      summary: Create a Centroid (assign cluster)
+      operationId: createCentroid
+      tags: [Clustering]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [cluster, input_data]
+              properties:
+                cluster:
+                  type: string
+                input_data:
+                  type: object
+      responses:
+        '201':
+          description: Centroid created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Centroid'
+
+  /centroid/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Centroid
+      operationId: getCentroid
+      tags: [Clustering]
+      responses:
+        '200':
+          description: Centroid details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Centroid'
+
+  /anomaly:
+    get:
+      summary: List Anomaly Detectors
+      operationId: listAnomalies
+      tags: [Anomaly Detection]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of anomaly detectors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create an Anomaly Detector
+      operationId: createAnomaly
+      tags: [Anomaly Detection]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [dataset]
+              properties:
+                dataset:
+                  type: string
+                top_anomalies:
+                  type: integer
+                  description: Number of top anomalies to identify.
+      responses:
+        '201':
+          description: Anomaly detector created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Anomaly'
+
+  /anomaly/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get an Anomaly Detector
+      operationId: getAnomaly
+      tags: [Anomaly Detection]
+      responses:
+        '200':
+          description: Anomaly detector details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Anomaly'
+    put:
+      summary: Update an Anomaly Detector
+      operationId: updateAnomaly
+      tags: [Anomaly Detection]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Anomaly updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Anomaly'
+    delete:
+      summary: Delete an Anomaly Detector
+      operationId: deleteAnomaly
+      tags: [Anomaly Detection]
+      responses:
+        '204':
+          description: Anomaly deleted
+
+  /anomalyscore:
+    post:
+      summary: Create an Anomaly Score
+      operationId: createAnomalyScore
+      tags: [Anomaly Detection]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [anomaly, input_data]
+              properties:
+                anomaly:
+                  type: string
+                input_data:
+                  type: object
+      responses:
+        '201':
+          description: Anomaly score created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnomalyScore'
+
+  /anomalyscore/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get an Anomaly Score
+      operationId: getAnomalyScore
+      tags: [Anomaly Detection]
+      responses:
+        '200':
+          description: Anomaly score details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnomalyScore'
+
+  /logisticregression:
+    get:
+      summary: List Logistic Regression Models
+      operationId: listLogisticRegressions
+      tags: [Supervised Learning]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of logistic regression models
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a Logistic Regression Model
+      operationId: createLogisticRegression
+      tags: [Supervised Learning]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [dataset]
+              properties:
+                dataset:
+                  type: string
+                objective_field:
+                  type: string
+      responses:
+        '201':
+          description: Logistic regression model created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogisticRegression'
+
+  /logisticregression/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Logistic Regression Model
+      operationId: getLogisticRegression
+      tags: [Supervised Learning]
+      responses:
+        '200':
+          description: Logistic regression details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogisticRegression'
+    put:
+      summary: Update a Logistic Regression Model
+      operationId: updateLogisticRegression
+      tags: [Supervised Learning]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Logistic regression updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogisticRegression'
+    delete:
+      summary: Delete a Logistic Regression Model
+      operationId: deleteLogisticRegression
+      tags: [Supervised Learning]
+      responses:
+        '204':
+          description: Logistic regression deleted
+
+  /linearregression:
+    get:
+      summary: List Linear Regression Models
+      operationId: listLinearRegressions
+      tags: [Supervised Learning]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of linear regression models
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a Linear Regression Model
+      operationId: createLinearRegression
+      tags: [Supervised Learning]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [dataset]
+              properties:
+                dataset:
+                  type: string
+                objective_field:
+                  type: string
+      responses:
+        '201':
+          description: Linear regression model created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinearRegression'
+
+  /linearregression/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Linear Regression Model
+      operationId: getLinearRegression
+      tags: [Supervised Learning]
+      responses:
+        '200':
+          description: Linear regression details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinearRegression'
+    put:
+      summary: Update a Linear Regression Model
+      operationId: updateLinearRegression
+      tags: [Supervised Learning]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Linear regression updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinearRegression'
+    delete:
+      summary: Delete a Linear Regression Model
+      operationId: deleteLinearRegression
+      tags: [Supervised Learning]
+      responses:
+        '204':
+          description: Linear regression deleted
+
+  /deepnet:
+    get:
+      summary: List Deepnets
+      operationId: listDeepnets
+      tags: [Supervised Learning]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of deepnets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a Deepnet
+      operationId: createDeepnet
+      tags: [Supervised Learning]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [dataset]
+              properties:
+                dataset:
+                  type: string
+                objective_field:
+                  type: string
+      responses:
+        '201':
+          description: Deepnet created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deepnet'
+
+  /deepnet/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Deepnet
+      operationId: getDeepnet
+      tags: [Supervised Learning]
+      responses:
+        '200':
+          description: Deepnet details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deepnet'
+    put:
+      summary: Update a Deepnet
+      operationId: updateDeepnet
+      tags: [Supervised Learning]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Deepnet updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deepnet'
+    delete:
+      summary: Delete a Deepnet
+      operationId: deleteDeepnet
+      tags: [Supervised Learning]
+      responses:
+        '204':
+          description: Deepnet deleted
+
+  /timeseries:
+    get:
+      summary: List Time Series
+      operationId: listTimeSeries
+      tags: [Time Series]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of time series models
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a Time Series
+      operationId: createTimeSeries
+      tags: [Time Series]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [dataset]
+              properties:
+                dataset:
+                  type: string
+                objective_fields:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '201':
+          description: Time series created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+
+  /timeseries/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Time Series
+      operationId: getTimeSeries
+      tags: [Time Series]
+      responses:
+        '200':
+          description: Time series details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+    put:
+      summary: Update a Time Series
+      operationId: updateTimeSeries
+      tags: [Time Series]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Time series updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+    delete:
+      summary: Delete a Time Series
+      operationId: deleteTimeSeries
+      tags: [Time Series]
+      responses:
+        '204':
+          description: Time series deleted
+
+  /forecast:
+    post:
+      summary: Create a Forecast
+      operationId: createForecast
+      tags: [Time Series]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [timeseries, input_data]
+              properties:
+                timeseries:
+                  type: string
+                input_data:
+                  type: object
+      responses:
+        '201':
+          description: Forecast created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forecast'
+
+  /forecast/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Forecast
+      operationId: getForecast
+      tags: [Time Series]
+      responses:
+        '200':
+          description: Forecast details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forecast'
+
+  /topicmodel:
+    get:
+      summary: List Topic Models
+      operationId: listTopicModels
+      tags: [Unsupervised Learning]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of topic models
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a Topic Model
+      operationId: createTopicModel
+      tags: [Unsupervised Learning]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [dataset]
+              properties:
+                dataset:
+                  type: string
+                number_of_topics:
+                  type: integer
+                  default: 8
+      responses:
+        '201':
+          description: Topic model created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopicModel'
+
+  /topicmodel/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Topic Model
+      operationId: getTopicModel
+      tags: [Unsupervised Learning]
+      responses:
+        '200':
+          description: Topic model details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopicModel'
+    put:
+      summary: Update a Topic Model
+      operationId: updateTopicModel
+      tags: [Unsupervised Learning]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Topic model updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopicModel'
+    delete:
+      summary: Delete a Topic Model
+      operationId: deleteTopicModel
+      tags: [Unsupervised Learning]
+      responses:
+        '204':
+          description: Topic model deleted
+
+  /association:
+    get:
+      summary: List Associations
+      operationId: listAssociations
+      tags: [Unsupervised Learning]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of associations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create an Association
+      operationId: createAssociation
+      tags: [Unsupervised Learning]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [dataset]
+              properties:
+                dataset:
+                  type: string
+      responses:
+        '201':
+          description: Association created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Association'
+
+  /association/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get an Association
+      operationId: getAssociation
+      tags: [Unsupervised Learning]
+      responses:
+        '200':
+          description: Association details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Association'
+    put:
+      summary: Update an Association
+      operationId: updateAssociation
+      tags: [Unsupervised Learning]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Association updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Association'
+    delete:
+      summary: Delete an Association
+      operationId: deleteAssociation
+      tags: [Unsupervised Learning]
+      responses:
+        '204':
+          description: Association deleted
+
+  /pca:
+    get:
+      summary: List PCA Models
+      operationId: listPCAs
+      tags: [Unsupervised Learning]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of PCA models
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a PCA Model
+      operationId: createPCA
+      tags: [Unsupervised Learning]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [dataset]
+              properties:
+                dataset:
+                  type: string
+      responses:
+        '201':
+          description: PCA model created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PCA'
+
+  /pca/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a PCA Model
+      operationId: getPCA
+      tags: [Unsupervised Learning]
+      responses:
+        '200':
+          description: PCA model details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PCA'
+    put:
+      summary: Update a PCA Model
+      operationId: updatePCA
+      tags: [Unsupervised Learning]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: PCA updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PCA'
+    delete:
+      summary: Delete a PCA Model
+      operationId: deletePCA
+      tags: [Unsupervised Learning]
+      responses:
+        '204':
+          description: PCA deleted
+
+  /batchprediction:
+    get:
+      summary: List Batch Predictions
+      operationId: listBatchPredictions
+      tags: [Batch Operations]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of batch predictions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a Batch Prediction
+      operationId: createBatchPrediction
+      tags: [Batch Operations]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [model, dataset]
+              properties:
+                model:
+                  type: string
+                dataset:
+                  type: string
+                output_fields:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '201':
+          description: Batch prediction created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchPrediction'
+
+  /batchprediction/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Batch Prediction
+      operationId: getBatchPrediction
+      tags: [Batch Operations]
+      responses:
+        '200':
+          description: Batch prediction details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchPrediction'
+    delete:
+      summary: Delete a Batch Prediction
+      operationId: deleteBatchPrediction
+      tags: [Batch Operations]
+      responses:
+        '204':
+          description: Batch prediction deleted
+
+  /batchcentroid:
+    post:
+      summary: Create a Batch Centroid
+      operationId: createBatchCentroid
+      tags: [Batch Operations]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [cluster, dataset]
+              properties:
+                cluster:
+                  type: string
+                dataset:
+                  type: string
+      responses:
+        '201':
+          description: Batch centroid created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchCentroid'
+
+  /batchcentroid/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Batch Centroid
+      operationId: getBatchCentroid
+      tags: [Batch Operations]
+      responses:
+        '200':
+          description: Batch centroid details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchCentroid'
+    delete:
+      summary: Delete a Batch Centroid
+      operationId: deleteBatchCentroid
+      tags: [Batch Operations]
+      responses:
+        '204':
+          description: Batch centroid deleted
+
+  /batchanomalyscore:
+    post:
+      summary: Create a Batch Anomaly Score
+      operationId: createBatchAnomalyScore
+      tags: [Batch Operations]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [anomaly, dataset]
+              properties:
+                anomaly:
+                  type: string
+                dataset:
+                  type: string
+      responses:
+        '201':
+          description: Batch anomaly score created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchAnomalyScore'
+
+  /batchanomalyscore/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Batch Anomaly Score
+      operationId: getBatchAnomalyScore
+      tags: [Batch Operations]
+      responses:
+        '200':
+          description: Batch anomaly score details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchAnomalyScore'
+    delete:
+      summary: Delete a Batch Anomaly Score
+      operationId: deleteBatchAnomalyScore
+      tags: [Batch Operations]
+      responses:
+        '204':
+          description: Batch anomaly score deleted
+
+  /project:
+    get:
+      summary: List Projects
+      operationId: listProjects
+      tags: [Projects]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a Project
+      operationId: createProject
+      tags: [Projects]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '201':
+          description: Project created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+
+  /project/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Project
+      operationId: getProject
+      tags: [Projects]
+      responses:
+        '200':
+          description: Project details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+    put:
+      summary: Update a Project
+      operationId: updateProject
+      tags: [Projects]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Project updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+    delete:
+      summary: Delete a Project
+      operationId: deleteProject
+      tags: [Projects]
+      responses:
+        '204':
+          description: Project deleted
+
+  /script:
+    get:
+      summary: List Scripts
+      operationId: listScripts
+      tags: [WhizzML Scripting]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of scripts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create a Script
+      operationId: createScript
+      tags: [WhizzML Scripting]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [source_code]
+              properties:
+                source_code:
+                  type: string
+                  description: WhizzML source code.
+                name:
+                  type: string
+                inputs:
+                  type: array
+                  items:
+                    type: object
+                outputs:
+                  type: array
+                  items:
+                    type: object
+      responses:
+        '201':
+          description: Script created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Script'
+
+  /script/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get a Script
+      operationId: getScript
+      tags: [WhizzML Scripting]
+      responses:
+        '200':
+          description: Script details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Script'
+    put:
+      summary: Update a Script
+      operationId: updateScript
+      tags: [WhizzML Scripting]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Script updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Script'
+    delete:
+      summary: Delete a Script
+      operationId: deleteScript
+      tags: [WhizzML Scripting]
+      responses:
+        '204':
+          description: Script deleted
+
+  /execution:
+    get:
+      summary: List Executions
+      operationId: listExecutions
+      tags: [WhizzML Scripting]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of executions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create an Execution
+      operationId: createExecution
+      tags: [WhizzML Scripting]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [script]
+              properties:
+                script:
+                  type: string
+                inputs:
+                  type: array
+                  items:
+                    type: object
+      responses:
+        '201':
+          description: Execution created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Execution'
+
+  /execution/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get an Execution
+      operationId: getExecution
+      tags: [WhizzML Scripting]
+      responses:
+        '200':
+          description: Execution details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Execution'
+    delete:
+      summary: Delete an Execution
+      operationId: deleteExecution
+      tags: [WhizzML Scripting]
+      responses:
+        '204':
+          description: Execution deleted
+
+  /externalconnector:
+    get:
+      summary: List External Connectors
+      operationId: listExternalConnectors
+      tags: [Data Connectors]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: List of external connectors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+    post:
+      summary: Create an External Connector
+      operationId: createExternalConnector
+      tags: [Data Connectors]
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/apiKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [connection]
+              properties:
+                connection:
+                  type: object
+                  description: Connection configuration (host, port, db, user, password, etc.)
+                source_type:
+                  type: string
+                  enum: [postgresql, mysql, elasticsearch, bigquery, sqlserver]
+      responses:
+        '201':
+          description: External connector created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalConnector'
+
+  /externalconnector/{resource_id}:
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/apiKey'
+    get:
+      summary: Get an External Connector
+      operationId: getExternalConnector
+      tags: [Data Connectors]
+      responses:
+        '200':
+          description: External connector details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalConnector'
+    put:
+      summary: Update an External Connector
+      operationId: updateExternalConnector
+      tags: [Data Connectors]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: External connector updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalConnector'
+    delete:
+      summary: Delete an External Connector
+      operationId: deleteExternalConnector
+      tags: [Data Connectors]
+      responses:
+        '204':
+          description: External connector deleted
+
+tags:
+  - name: Sources
+    description: Upload and manage raw data sources (CSV, JSON, Excel, etc.)
+  - name: Datasets
+    description: Create and manage training datasets from sources
+  - name: Models
+    description: Train and manage decision tree models
+  - name: Ensembles
+    description: Train and manage ensemble models (random forests, gradient boosted trees)
+  - name: Predictions
+    description: Generate individual predictions from trained models
+  - name: Evaluations
+    description: Evaluate model performance against a test dataset
+  - name: Clustering
+    description: Create unsupervised cluster models and assign centroids
+  - name: Anomaly Detection
+    description: Detect anomalies in datasets using Isolation Forest
+  - name: Supervised Learning
+    description: Logistic regression, linear regression, and deep neural network models
+  - name: Time Series
+    description: Time series forecasting models and forecasts
+  - name: Unsupervised Learning
+    description: Topic models, association rules, and PCA
+  - name: Batch Operations
+    description: Run predictions, centroid assignments, and anomaly scoring on full datasets
+  - name: Projects
+    description: Organize resources into projects
+  - name: WhizzML Scripting
+    description: Automate ML workflows with WhizzML scripts and executions
+  - name: Data Connectors
+    description: Connect to external databases and data sources
+
+x-tagGroups:
+  - name: Data Management
+    tags: [Sources, Datasets, Projects, Data Connectors]
+  - name: Supervised Learning
+    tags: [Models, Ensembles, Supervised Learning, Evaluations, Predictions]
+  - name: Unsupervised Learning
+    tags: [Clustering, Anomaly Detection, Unsupervised Learning, Time Series]
+  - name: Batch Operations
+    tags: [Batch Operations]
+  - name: Automation
+    tags: [WhizzML Scripting]
