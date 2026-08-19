@@ -1,0 +1,618 @@
+{
+  "item": [
+    {
+      "id": "0a56a97a-236e-470e-94c8-145bb4589a8a",
+      "name": "Ensembles",
+      "description": {
+        "content": "Train and manage ensemble models (random forests, gradient boosted trees)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c0e78762-d482-4c21-b8ed-03acff36f3e5",
+          "name": "List Ensembles",
+          "request": {
+            "name": "List Ensembles",
+            "description": {},
+            "url": {
+              "path": [
+                "ensemble"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "(Required) BigML username."
+                },
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) BigML API key."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of resources to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Index of the first resource to return."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f39dc9a4-d715-4973-a66b-b108af558377",
+              "name": "List of ensembles",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ensemble"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "username",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"limit\": 9907,\n    \"offset\": 3959,\n    \"total_count\": 6327,\n    \"previous\": \"string\",\n    \"next\": \"string\"\n  },\n  \"objects\": [\n    {\n      \"resource\": \"string\",\n      \"created\": \"2019-02-20T20:13:48.816Z\",\n      \"updated\": \"1948-06-15T05:20:28.783Z\",\n      \"status\": {\n        \"code\": 4833,\n        \"message\": \"string\",\n        \"elapsed\": 3304.5952893742246\n      },\n      \"name\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"private\": false\n    },\n    {\n      \"resource\": \"string\",\n      \"created\": \"1976-03-07T12:04:09.953Z\",\n      \"updated\": \"1986-12-16T08:21:18.325Z\",\n      \"status\": {\n        \"code\": 2278,\n        \"message\": \"string\",\n        \"elapsed\": 4952.064605431834\n      },\n      \"name\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"private\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7815c32-1ddc-4139-ab63-1523b65a6813",
+          "name": "Create an Ensemble",
+          "request": {
+            "name": "Create an Ensemble",
+            "description": {},
+            "url": {
+              "path": [
+                "ensemble"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "(Required) BigML username."
+                },
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) BigML API key."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dataset\": \"<string>\",\n  \"number_of_models\": 10,\n  \"objective_field\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "53fa4a54-a428-4270-934f-6780c7cb67c7",
+              "name": "Ensemble created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ensemble"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "username",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dataset\": \"<string>\",\n  \"number_of_models\": 10,\n  \"objective_field\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resource\": \"string\",\n  \"created\": \"1985-03-22T17:47:05.240Z\",\n  \"updated\": \"1975-04-05T08:12:00.143Z\",\n  \"status\": {\n    \"code\": 1371,\n    \"message\": \"string\",\n    \"elapsed\": 4991.422392242723\n  },\n  \"name\": \"string\",\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"private\": true,\n  \"dataset\": \"string\",\n  \"models\": [\n    \"string\",\n    \"string\"\n  ],\n  \"number_of_models\": 2080\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c477b3ba-329a-4d56-bd6f-69cfa8f69f4a",
+          "name": "Get an Ensemble",
+          "request": {
+            "name": "Get an Ensemble",
+            "description": {},
+            "url": {
+              "path": [
+                "ensemble",
+                ":resource_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "(Required) BigML username."
+                },
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) BigML API key."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "resource_id",
+                  "description": "(Required) The 24-character hexadecimal resource identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b411c620-b8c2-42ee-b0bf-1cbd8a39b557",
+              "name": "Ensemble details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ensemble",
+                    ":resource_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "username",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) The 24-character hexadecimal resource identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resource\": \"string\",\n  \"created\": \"2001-01-10T03:34:07.525Z\",\n  \"updated\": \"2011-09-06T18:53:16.033Z\",\n  \"status\": {\n    \"code\": 3740,\n    \"message\": \"string\",\n    \"elapsed\": 548.1152164456049\n  },\n  \"name\": \"string\",\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"private\": true,\n  \"dataset\": \"string\",\n  \"models\": [\n    \"string\",\n    \"string\"\n  ],\n  \"number_of_models\": 2932\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "315d3420-e0c4-40fa-90b3-c2aa6ffb2aa3",
+          "name": "Update an Ensemble",
+          "request": {
+            "name": "Update an Ensemble",
+            "description": {},
+            "url": {
+              "path": [
+                "ensemble",
+                ":resource_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "(Required) BigML username."
+                },
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) BigML API key."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "resource_id",
+                  "description": "(Required) The 24-character hexadecimal resource identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c02a7133-65f0-4a5c-b703-a02fa1c05995",
+              "name": "Ensemble updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ensemble",
+                    ":resource_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "username",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) The 24-character hexadecimal resource identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resource\": \"string\",\n  \"created\": \"2001-01-10T03:34:07.525Z\",\n  \"updated\": \"2011-09-06T18:53:16.033Z\",\n  \"status\": {\n    \"code\": 3740,\n    \"message\": \"string\",\n    \"elapsed\": 548.1152164456049\n  },\n  \"name\": \"string\",\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"private\": true,\n  \"dataset\": \"string\",\n  \"models\": [\n    \"string\",\n    \"string\"\n  ],\n  \"number_of_models\": 2932\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e4f9c5f4-426b-473a-8e47-74525cc3ed57",
+          "name": "Delete an Ensemble",
+          "request": {
+            "name": "Delete an Ensemble",
+            "description": {},
+            "url": {
+              "path": [
+                "ensemble",
+                ":resource_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "(Required) BigML username."
+                },
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) BigML API key."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "resource_id",
+                  "description": "(Required) The 24-character hexadecimal resource identifier."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "afe6dc6f-60e7-46ed-9b9d-3c99cf57deff",
+              "name": "Ensemble deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ensemble",
+                    ":resource_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "username",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) The 24-character hexadecimal resource identifier."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://bigml.io/andromeda",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "username"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d5fc973e-8afb-444c-a3a3-d557abccb5a4",
+    "name": "BigML REST Anomaly Detection Ensembles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The BigML REST API provides programmatic access to the full BigML machine learning platform. Create and manage sources, datasets, models, ensembles, clusters, anomaly detectors, topic models, time series forecasters, deepnets, linear and logistic regression models, PCA, and generate predictions — both individual and batch — over HTTPS using username and API key authentication.\n\n\nContact Support:\n Name: BigML Support",
+      "type": "text/plain"
+    }
+  }
+}

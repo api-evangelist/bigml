@@ -1,0 +1,249 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BigML REST Anomaly Detection Time Series API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "username",
+      "value": "{{username}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Time Series",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Time Series",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bigml.io/andromeda/timeseries",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of resources to return."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first resource to return."
+              }
+            ]
+          },
+          "docs": "List Time Series"
+        },
+        {
+          "info": {
+            "name": "Create a Time Series",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bigml.io/andromeda/timeseries",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Time Series"
+        },
+        {
+          "info": {
+            "name": "Get a Time Series",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bigml.io/andromeda/timeseries/:resource_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "The 24-character hexadecimal resource identifier."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ]
+          },
+          "docs": "Get a Time Series"
+        },
+        {
+          "info": {
+            "name": "Update a Time Series",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://bigml.io/andromeda/timeseries/:resource_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "The 24-character hexadecimal resource identifier."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Time Series"
+        },
+        {
+          "info": {
+            "name": "Delete a Time Series",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://bigml.io/andromeda/timeseries/:resource_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "The 24-character hexadecimal resource identifier."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ]
+          },
+          "docs": "Delete a Time Series"
+        },
+        {
+          "info": {
+            "name": "Create a Forecast",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bigml.io/andromeda/forecast",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Forecast"
+        },
+        {
+          "info": {
+            "name": "Get a Forecast",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bigml.io/andromeda/forecast/:resource_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "The 24-character hexadecimal resource identifier."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ]
+          },
+          "docs": "Get a Forecast"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

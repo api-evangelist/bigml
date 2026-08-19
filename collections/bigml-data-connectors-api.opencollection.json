@@ -1,0 +1,189 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BigML REST Anomaly Detection Data Connectors API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "username",
+      "value": "{{username}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Data Connectors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List External Connectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bigml.io/andromeda/externalconnector",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of resources to return."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first resource to return."
+              }
+            ]
+          },
+          "docs": "List External Connectors"
+        },
+        {
+          "info": {
+            "name": "Create an External Connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bigml.io/andromeda/externalconnector",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an External Connector"
+        },
+        {
+          "info": {
+            "name": "Get an External Connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bigml.io/andromeda/externalconnector/:resource_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "The 24-character hexadecimal resource identifier."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ]
+          },
+          "docs": "Get an External Connector"
+        },
+        {
+          "info": {
+            "name": "Update an External Connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://bigml.io/andromeda/externalconnector/:resource_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "The 24-character hexadecimal resource identifier."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an External Connector"
+        },
+        {
+          "info": {
+            "name": "Delete an External Connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://bigml.io/andromeda/externalconnector/:resource_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "The 24-character hexadecimal resource identifier."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ]
+          },
+          "docs": "Delete an External Connector"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

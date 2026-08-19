@@ -1,0 +1,189 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BigML REST Anomaly Detection Models API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "username",
+      "value": "{{username}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bigml.io/andromeda/model",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of resources to return."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first resource to return."
+              }
+            ]
+          },
+          "docs": "List Models"
+        },
+        {
+          "info": {
+            "name": "Create a Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bigml.io/andromeda/model",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Model"
+        },
+        {
+          "info": {
+            "name": "Get a Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bigml.io/andromeda/model/:resource_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "The 24-character hexadecimal resource identifier."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ]
+          },
+          "docs": "Get a Model"
+        },
+        {
+          "info": {
+            "name": "Update a Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://bigml.io/andromeda/model/:resource_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "The 24-character hexadecimal resource identifier."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Model"
+        },
+        {
+          "info": {
+            "name": "Delete a Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://bigml.io/andromeda/model/:resource_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "The 24-character hexadecimal resource identifier."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ]
+          },
+          "docs": "Delete a Model"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

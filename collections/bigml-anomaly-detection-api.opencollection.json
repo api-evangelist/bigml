@@ -1,0 +1,249 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BigML REST Anomaly Detection API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "username",
+      "value": "{{username}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Anomaly Detection",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Anomaly Detectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bigml.io/andromeda/anomaly",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of resources to return."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first resource to return."
+              }
+            ]
+          },
+          "docs": "List Anomaly Detectors"
+        },
+        {
+          "info": {
+            "name": "Create an Anomaly Detector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bigml.io/andromeda/anomaly",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Anomaly Detector"
+        },
+        {
+          "info": {
+            "name": "Get an Anomaly Detector",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bigml.io/andromeda/anomaly/:resource_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "The 24-character hexadecimal resource identifier."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ]
+          },
+          "docs": "Get an Anomaly Detector"
+        },
+        {
+          "info": {
+            "name": "Update an Anomaly Detector",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://bigml.io/andromeda/anomaly/:resource_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "The 24-character hexadecimal resource identifier."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an Anomaly Detector"
+        },
+        {
+          "info": {
+            "name": "Delete an Anomaly Detector",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://bigml.io/andromeda/anomaly/:resource_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "The 24-character hexadecimal resource identifier."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ]
+          },
+          "docs": "Delete an Anomaly Detector"
+        },
+        {
+          "info": {
+            "name": "Create an Anomaly Score",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bigml.io/andromeda/anomalyscore",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Anomaly Score"
+        },
+        {
+          "info": {
+            "name": "Get an Anomaly Score",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bigml.io/andromeda/anomalyscore/:resource_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "The 24-character hexadecimal resource identifier."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "BigML username."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "BigML API key."
+              }
+            ]
+          },
+          "docs": "Get an Anomaly Score"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
