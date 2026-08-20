@@ -25,6 +25,16 @@ created: '2026-06-13'
 modified: '2026-06-13'
 specificationVersion: '0.23'
 tags:
+  - Machine-Learning
+  - Artificial Intelligence
+  - Predictions
+  - Datasets
+  - Models
+  - Clustering
+  - Anomaly Detection
+  - Time Series
+  - Deep Learning
+tags_raw:
   - Machine Learning
   - Artificial Intelligence
   - Predictions
@@ -62,7 +72,8 @@ apis:
   description: Run predictions, centroid assignments, and anomaly scoring on full datasets
   humanURL: https://bigml.com/api/
   baseURL: https://bigml.io
-  tags:
+  tags: []
+  tags_raw:
   - Batch Operations
   properties:
   - type: OpenAPI
@@ -231,6 +242,8 @@ apis:
   humanURL: https://bigml.com/api/
   baseURL: https://bigml.io
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
