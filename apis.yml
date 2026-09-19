@@ -192,6 +192,8 @@ apis:
   humanURL: https://bigml.com/api/
   baseURL: https://bigml.io
   tags:
+  - Evaluation
+  tags_raw:
   - Evaluations
   properties:
   - type: OpenAPI
