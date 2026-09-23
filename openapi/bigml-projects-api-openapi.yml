@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: BigML REST Anomaly Detection Projects API
-  description: 'The BigML REST API provides programmatic access to the full BigML machine learning platform. Create and manage sources, datasets, models, ensembles, clusters, anomaly detectors, topic models, time series forecasters, deepnets, linear and logistic regression models, PCA, and generate predictions — both individual and batch — over HTTPS using username and API key authentication.
-
-    '
+  title: BigML REST Projects API
+  description: The BigML REST API provides programmatic access to the full BigML machine learning platform. Create and manage sources, datasets, models, ensembles, clusters, anomaly detectors, topic models, time series forecasters, deepnets, linear and logistic regression models, PCA, and generate predictions — both individual and batch — over HTTPS using username and API key authentication.
   version: 1.0.0
   contact:
     name: BigML Support
@@ -164,16 +162,26 @@ components:
             total_count:
               type: integer
             previous:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
             next:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
         objects:
           type: array
           items:
             $ref: '#/components/schemas/ResourceBase'
   parameters:
+    offset:
+      name: offset
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 0
+      description: Index of the first resource to return.
     apiKey:
       name: api_key
       in: query
@@ -181,13 +189,6 @@ components:
       schema:
         type: string
       description: BigML API key.
-    username:
-      name: username
-      in: query
-      required: true
-      schema:
-        type: string
-      description: BigML username.
     resourceId:
       name: resource_id
       in: path
@@ -205,14 +206,13 @@ components:
         default: 20
         maximum: 1000
       description: Number of resources to return.
-    offset:
-      name: offset
+    username:
+      name: username
       in: query
-      required: false
+      required: true
       schema:
-        type: integer
-        default: 0
-      description: Index of the first resource to return.
+        type: string
+      description: BigML username.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
