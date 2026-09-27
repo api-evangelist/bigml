@@ -115,6 +115,30 @@ paths:
           description: Model deleted
 components:
   schemas:
+    ListResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            limit:
+              type: integer
+            offset:
+              type: integer
+            total_count:
+              type: integer
+            previous:
+              type:
+              - string
+              - 'null'
+            next:
+              type:
+              - string
+              - 'null'
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceBase'
     ResourceStatus:
       type: object
       properties:
@@ -162,30 +186,6 @@ components:
             type: string
         private:
           type: boolean
-    ListResponse:
-      type: object
-      properties:
-        meta:
-          type: object
-          properties:
-            limit:
-              type: integer
-            offset:
-              type: integer
-            total_count:
-              type: integer
-            previous:
-              type:
-              - string
-              - 'null'
-            next:
-              type:
-              - string
-              - 'null'
-        objects:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceBase'
   parameters:
     offset:
       name: offset
@@ -210,6 +210,13 @@ components:
         type: string
         pattern: ^[a-f0-9]{24}$
       description: The 24-character hexadecimal resource identifier.
+    username:
+      name: username
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML username.
     limit:
       name: limit
       in: query
@@ -219,13 +226,6 @@ components:
         default: 20
         maximum: 1000
       description: Number of resources to return.
-    username:
-      name: username
-      in: query
-      required: true
-      schema:
-        type: string
-      description: BigML username.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

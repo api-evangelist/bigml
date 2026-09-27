@@ -208,28 +208,6 @@ paths:
           description: Batch anomaly score deleted
 components:
   schemas:
-    ResourceStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: HTTP-style status code (1=queued,2=started,3=waiting,4=processing,5=finished,0=unknown,-1=failed)
-        message:
-          type: string
-        elapsed:
-          type: number
-          description: Processing time in milliseconds.
-    BatchCentroid:
-      allOf:
-      - $ref: '#/components/schemas/ResourceBase'
-      - type: object
-        properties:
-          cluster:
-            type: string
-          dataset:
-            type: string
-          output_dataset:
-            type: string
     BatchAnomalyScore:
       allOf:
       - $ref: '#/components/schemas/ResourceBase'
@@ -241,28 +219,17 @@ components:
             type: string
           output_dataset:
             type: string
-    ResourceBase:
-      type: object
-      properties:
-        resource:
-          type: string
-          description: Resource identifier (e.g., source/5f1a2b3c4d5e6f7890abcdef)
-        created:
-          type: string
-          format: date-time
-        updated:
-          type: string
-          format: date-time
-        status:
-          $ref: '#/components/schemas/ResourceStatus'
-        name:
-          type: string
-        tags:
-          type: array
-          items:
+    BatchCentroid:
+      allOf:
+      - $ref: '#/components/schemas/ResourceBase'
+      - type: object
+        properties:
+          cluster:
             type: string
-        private:
-          type: boolean
+          dataset:
+            type: string
+          output_dataset:
+            type: string
     BatchPrediction:
       allOf:
       - $ref: '#/components/schemas/ResourceBase'
@@ -298,6 +265,39 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceBase'
+    ResourceStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: HTTP-style status code (1=queued,2=started,3=waiting,4=processing,5=finished,0=unknown,-1=failed)
+        message:
+          type: string
+        elapsed:
+          type: number
+          description: Processing time in milliseconds.
+    ResourceBase:
+      type: object
+      properties:
+        resource:
+          type: string
+          description: Resource identifier (e.g., source/5f1a2b3c4d5e6f7890abcdef)
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/ResourceStatus'
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        private:
+          type: boolean
   parameters:
     offset:
       name: offset
@@ -322,6 +322,13 @@ components:
         type: string
         pattern: ^[a-f0-9]{24}$
       description: The 24-character hexadecimal resource identifier.
+    username:
+      name: username
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML username.
     limit:
       name: limit
       in: query
@@ -331,13 +338,6 @@ components:
         default: 20
         maximum: 1000
       description: Number of resources to return.
-    username:
-      name: username
-      in: query
-      required: true
-      schema:
-        type: string
-      description: BigML username.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

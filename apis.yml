@@ -38,7 +38,7 @@ created: '2026-06-13'
 modified: '2026-06-13'
 specificationVersion: '0.23'
 tags:
-  - Machine-Learning
+  - Machine Learning
   - Artificial Intelligence
   - Predictions
   - Datasets
@@ -57,6 +57,7 @@ tags_raw:
   - Anomaly Detection
   - Time Series
   - Deep Learning
+  - Machine-Learning
 
 apis:
 - aid: bigml:bigml-anomaly-detection-api

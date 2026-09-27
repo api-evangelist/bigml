@@ -160,63 +160,6 @@ paths:
                 $ref: '#/components/schemas/Forecast'
 components:
   schemas:
-    ResourceStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: HTTP-style status code (1=queued,2=started,3=waiting,4=processing,5=finished,0=unknown,-1=failed)
-        message:
-          type: string
-        elapsed:
-          type: number
-          description: Processing time in milliseconds.
-    Forecast:
-      allOf:
-      - $ref: '#/components/schemas/ResourceBase'
-      - type: object
-        properties:
-          time_series:
-            type: string
-          input_data:
-            type: object
-          forecast:
-            type: object
-    ResourceBase:
-      type: object
-      properties:
-        resource:
-          type: string
-          description: Resource identifier (e.g., source/5f1a2b3c4d5e6f7890abcdef)
-        created:
-          type: string
-          format: date-time
-        updated:
-          type: string
-          format: date-time
-        status:
-          $ref: '#/components/schemas/ResourceStatus'
-        name:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        private:
-          type: boolean
-    TimeSeries:
-      allOf:
-      - $ref: '#/components/schemas/ResourceBase'
-      - type: object
-        properties:
-          dataset:
-            type: string
-          objective_fields:
-            type: array
-            items:
-              type: string
-          period:
-            type: integer
     ListResponse:
       type: object
       properties:
@@ -241,6 +184,63 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceBase'
+    ResourceStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: HTTP-style status code (1=queued,2=started,3=waiting,4=processing,5=finished,0=unknown,-1=failed)
+        message:
+          type: string
+        elapsed:
+          type: number
+          description: Processing time in milliseconds.
+    TimeSeries:
+      allOf:
+      - $ref: '#/components/schemas/ResourceBase'
+      - type: object
+        properties:
+          dataset:
+            type: string
+          objective_fields:
+            type: array
+            items:
+              type: string
+          period:
+            type: integer
+    ResourceBase:
+      type: object
+      properties:
+        resource:
+          type: string
+          description: Resource identifier (e.g., source/5f1a2b3c4d5e6f7890abcdef)
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/ResourceStatus'
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        private:
+          type: boolean
+    Forecast:
+      allOf:
+      - $ref: '#/components/schemas/ResourceBase'
+      - type: object
+        properties:
+          time_series:
+            type: string
+          input_data:
+            type: object
+          forecast:
+            type: object
   parameters:
     offset:
       name: offset
@@ -250,6 +250,13 @@ components:
         type: integer
         default: 0
       description: Index of the first resource to return.
+    apiKey:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML API key.
     resourceId:
       name: resource_id
       in: path
@@ -258,6 +265,13 @@ components:
         type: string
         pattern: ^[a-f0-9]{24}$
       description: The 24-character hexadecimal resource identifier.
+    username:
+      name: username
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML username.
     limit:
       name: limit
       in: query
@@ -267,20 +281,6 @@ components:
         default: 20
         maximum: 1000
       description: Number of resources to return.
-    apiKey:
-      name: api_key
-      in: query
-      required: true
-      schema:
-        type: string
-      description: BigML API key.
-    username:
-      name: username
-      in: query
-      required: true
-      schema:
-        type: string
-      description: BigML username.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

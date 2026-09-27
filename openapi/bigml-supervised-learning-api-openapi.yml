@@ -289,6 +289,30 @@ paths:
           description: Deepnet deleted
 components:
   schemas:
+    ListResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            limit:
+              type: integer
+            offset:
+              type: integer
+            total_count:
+              type: integer
+            previous:
+              type:
+              - string
+              - 'null'
+            next:
+              type:
+              - string
+              - 'null'
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceBase'
     ResourceStatus:
       type: object
       properties:
@@ -300,19 +324,6 @@ components:
         elapsed:
           type: number
           description: Processing time in milliseconds.
-    LinearRegression:
-      allOf:
-      - $ref: '#/components/schemas/ResourceBase'
-      - type: object
-        properties:
-          dataset:
-            type: string
-          objective_field:
-            type: string
-          coefficients:
-            type: array
-            items:
-              type: number
     LogisticRegression:
       allOf:
       - $ref: '#/components/schemas/ResourceBase'
@@ -350,6 +361,19 @@ components:
             type: string
         private:
           type: boolean
+    LinearRegression:
+      allOf:
+      - $ref: '#/components/schemas/ResourceBase'
+      - type: object
+        properties:
+          dataset:
+            type: string
+          objective_field:
+            type: string
+          coefficients:
+            type: array
+            items:
+              type: number
     Deepnet:
       allOf:
       - $ref: '#/components/schemas/ResourceBase'
@@ -361,30 +385,6 @@ components:
             type: string
           network:
             type: object
-    ListResponse:
-      type: object
-      properties:
-        meta:
-          type: object
-          properties:
-            limit:
-              type: integer
-            offset:
-              type: integer
-            total_count:
-              type: integer
-            previous:
-              type:
-              - string
-              - 'null'
-            next:
-              type:
-              - string
-              - 'null'
-        objects:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceBase'
   parameters:
     offset:
       name: offset
@@ -394,6 +394,13 @@ components:
         type: integer
         default: 0
       description: Index of the first resource to return.
+    apiKey:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML API key.
     resourceId:
       name: resource_id
       in: path
@@ -402,6 +409,13 @@ components:
         type: string
         pattern: ^[a-f0-9]{24}$
       description: The 24-character hexadecimal resource identifier.
+    username:
+      name: username
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML username.
     limit:
       name: limit
       in: query
@@ -411,20 +425,6 @@ components:
         default: 20
         maximum: 1000
       description: Number of resources to return.
-    apiKey:
-      name: api_key
-      in: query
-      required: true
-      schema:
-        type: string
-      description: BigML API key.
-    username:
-      name: username
-      in: query
-      required: true
-      schema:
-        type: string
-      description: BigML username.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
