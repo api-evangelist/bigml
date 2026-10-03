@@ -126,24 +126,17 @@ paths:
           description: Source deleted
 components:
   schemas:
-    Source:
-      allOf:
-      - $ref: '#/components/schemas/ResourceBase'
-      - type: object
-        properties:
-          file_name:
-            type: string
-          size:
-            type: integer
-            description: File size in bytes.
-          rows:
-            type: integer
-          fields:
-            type: object
-            additionalProperties:
-              type: object
-          source_parser:
-            type: object
+    ResourceStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: HTTP-style status code (1=queued,2=started,3=waiting,4=processing,5=finished,0=unknown,-1=failed)
+        message:
+          type: string
+        elapsed:
+          type: number
+          description: Processing time in milliseconds.
     ListResponse:
       type: object
       properties:
@@ -168,17 +161,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceBase'
-    ResourceStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: HTTP-style status code (1=queued,2=started,3=waiting,4=processing,5=finished,0=unknown,-1=failed)
-        message:
-          type: string
-        elapsed:
-          type: number
-          description: Processing time in milliseconds.
     ResourceBase:
       type: object
       properties:
@@ -201,15 +183,32 @@ components:
             type: string
         private:
           type: boolean
+    Source:
+      allOf:
+      - $ref: '#/components/schemas/ResourceBase'
+      - type: object
+        properties:
+          file_name:
+            type: string
+          size:
+            type: integer
+            description: File size in bytes.
+          rows:
+            type: integer
+          fields:
+            type: object
+            additionalProperties:
+              type: object
+          source_parser:
+            type: object
   parameters:
-    offset:
-      name: offset
+    order_by:
+      name: order_by
       in: query
       required: false
       schema:
-        type: integer
-        default: 0
-      description: Index of the first resource to return.
+        type: string
+      description: Field to sort results by. Prefix with - for descending order.
     apiKey:
       name: api_key
       in: query
@@ -232,13 +231,6 @@ components:
       schema:
         type: string
       description: BigML username.
-    order_by:
-      name: order_by
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Field to sort results by. Prefix with - for descending order.
     limit:
       name: limit
       in: query
@@ -248,6 +240,14 @@ components:
         default: 20
         maximum: 1000
       description: Number of resources to return.
+    offset:
+      name: offset
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 0
+      description: Index of the first resource to return.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

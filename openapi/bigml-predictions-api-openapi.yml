@@ -96,6 +96,17 @@ paths:
           description: Prediction deleted
 components:
   schemas:
+    ResourceStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: HTTP-style status code (1=queued,2=started,3=waiting,4=processing,5=finished,0=unknown,-1=failed)
+        message:
+          type: string
+        elapsed:
+          type: number
+          description: Processing time in milliseconds.
     ListResponse:
       type: object
       properties:
@@ -120,30 +131,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceBase'
-    ResourceStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: HTTP-style status code (1=queued,2=started,3=waiting,4=processing,5=finished,0=unknown,-1=failed)
-        message:
-          type: string
-        elapsed:
-          type: number
-          description: Processing time in milliseconds.
-    Prediction:
-      allOf:
-      - $ref: '#/components/schemas/ResourceBase'
-      - type: object
-        properties:
-          model:
-            type: string
-          input_data:
-            type: object
-          output:
-            type: string
-          prediction:
-            type: object
     ResourceBase:
       type: object
       properties:
@@ -166,15 +153,20 @@ components:
             type: string
         private:
           type: boolean
+    Prediction:
+      allOf:
+      - $ref: '#/components/schemas/ResourceBase'
+      - type: object
+        properties:
+          model:
+            type: string
+          input_data:
+            type: object
+          output:
+            type: string
+          prediction:
+            type: object
   parameters:
-    offset:
-      name: offset
-      in: query
-      required: false
-      schema:
-        type: integer
-        default: 0
-      description: Index of the first resource to return.
     apiKey:
       name: api_key
       in: query
@@ -206,6 +198,14 @@ components:
         default: 20
         maximum: 1000
       description: Number of resources to return.
+    offset:
+      name: offset
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 0
+      description: Index of the first resource to return.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
