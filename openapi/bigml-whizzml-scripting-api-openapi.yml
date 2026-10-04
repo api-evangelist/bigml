@@ -193,6 +193,43 @@ paths:
           description: Execution deleted
 components:
   schemas:
+    Script:
+      allOf:
+      - $ref: '#/components/schemas/ResourceBase'
+      - type: object
+        properties:
+          source_code:
+            type: string
+          inputs:
+            type: array
+            items:
+              type: object
+          outputs:
+            type: array
+            items:
+              type: object
+    ResourceBase:
+      type: object
+      properties:
+        resource:
+          type: string
+          description: Resource identifier (e.g., source/5f1a2b3c4d5e6f7890abcdef)
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/ResourceStatus'
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        private:
+          type: boolean
     ResourceStatus:
       type: object
       properties:
@@ -243,51 +280,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceBase'
-    ResourceBase:
-      type: object
-      properties:
-        resource:
-          type: string
-          description: Resource identifier (e.g., source/5f1a2b3c4d5e6f7890abcdef)
-        created:
-          type: string
-          format: date-time
-        updated:
-          type: string
-          format: date-time
-        status:
-          $ref: '#/components/schemas/ResourceStatus'
-        name:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        private:
-          type: boolean
-    Script:
-      allOf:
-      - $ref: '#/components/schemas/ResourceBase'
-      - type: object
-        properties:
-          source_code:
-            type: string
-          inputs:
-            type: array
-            items:
-              type: object
-          outputs:
-            type: array
-            items:
-              type: object
   parameters:
-    apiKey:
-      name: api_key
+    limit:
+      name: limit
       in: query
-      required: true
+      required: false
       schema:
-        type: string
-      description: BigML API key.
+        type: integer
+        default: 20
+        maximum: 1000
+      description: Number of resources to return.
     resourceId:
       name: resource_id
       in: path
@@ -303,15 +305,6 @@ components:
       schema:
         type: string
       description: BigML username.
-    limit:
-      name: limit
-      in: query
-      required: false
-      schema:
-        type: integer
-        default: 20
-        maximum: 1000
-      description: Number of resources to return.
     offset:
       name: offset
       in: query
@@ -320,6 +313,13 @@ components:
         type: integer
         default: 0
       description: Index of the first resource to return.
+    apiKey:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML API key.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

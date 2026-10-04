@@ -125,42 +125,54 @@ paths:
         '204':
           description: Source deleted
 components:
+  parameters:
+    limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 20
+        maximum: 1000
+      description: Number of resources to return.
+    resourceId:
+      name: resource_id
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: ^[a-f0-9]{24}$
+      description: The 24-character hexadecimal resource identifier.
+    username:
+      name: username
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML username.
+    order_by:
+      name: order_by
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Field to sort results by. Prefix with - for descending order.
+    offset:
+      name: offset
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 0
+      description: Index of the first resource to return.
+    apiKey:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML API key.
   schemas:
-    ResourceStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: HTTP-style status code (1=queued,2=started,3=waiting,4=processing,5=finished,0=unknown,-1=failed)
-        message:
-          type: string
-        elapsed:
-          type: number
-          description: Processing time in milliseconds.
-    ListResponse:
-      type: object
-      properties:
-        meta:
-          type: object
-          properties:
-            limit:
-              type: integer
-            offset:
-              type: integer
-            total_count:
-              type: integer
-            previous:
-              type:
-              - string
-              - 'null'
-            next:
-              type:
-              - string
-              - 'null'
-        objects:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceBase'
     ResourceBase:
       type: object
       properties:
@@ -201,53 +213,41 @@ components:
               type: object
           source_parser:
             type: object
-  parameters:
-    order_by:
-      name: order_by
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Field to sort results by. Prefix with - for descending order.
-    apiKey:
-      name: api_key
-      in: query
-      required: true
-      schema:
-        type: string
-      description: BigML API key.
-    resourceId:
-      name: resource_id
-      in: path
-      required: true
-      schema:
-        type: string
-        pattern: ^[a-f0-9]{24}$
-      description: The 24-character hexadecimal resource identifier.
-    username:
-      name: username
-      in: query
-      required: true
-      schema:
-        type: string
-      description: BigML username.
-    limit:
-      name: limit
-      in: query
-      required: false
-      schema:
-        type: integer
-        default: 20
-        maximum: 1000
-      description: Number of resources to return.
-    offset:
-      name: offset
-      in: query
-      required: false
-      schema:
-        type: integer
-        default: 0
-      description: Index of the first resource to return.
+    ResourceStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: HTTP-style status code (1=queued,2=started,3=waiting,4=processing,5=finished,0=unknown,-1=failed)
+        message:
+          type: string
+        elapsed:
+          type: number
+          description: Processing time in milliseconds.
+    ListResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            limit:
+              type: integer
+            offset:
+              type: integer
+            total_count:
+              type: integer
+            previous:
+              type:
+              - string
+              - 'null'
+            next:
+              type:
+              - string
+              - 'null'
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceBase'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
