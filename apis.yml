@@ -381,6 +381,9 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld
 common:
+  - type: CapabilityMap
+    url: capabilities/bigml-capability-edges.yml
+    name: BigML Business Capability Map
 
   - type: AgenticAccess
     url: agentic-access/bigml-agentic-access.yml

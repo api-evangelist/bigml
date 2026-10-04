@@ -1,0 +1,116 @@
+slug: bigml
+provider: BigML
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 11
+edges:
+- tag: Supervised Learning
+  spec_file: bigml-supervised-learning-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.93
+  evidence: POST /logisticregression 'Create a Logistic Regression Model'; POST /deepnet 'Create a Deepnet'
+  reason: Creation and management of supervised ML models (logistic/linear regression, deepnets) — unambiguously
+    AI/ML model lifecycle management.
+- tag: Anomaly Detection
+  spec_file: bigml-anomaly-detection-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.92
+  evidence: POST /anomaly createAnomaly 'Create an Anomaly Detector'; POST /anomalyscore 'Create an Anomaly
+    Score'
+  reason: Operations create and manage unsupervised ML anomaly-detection models and score records — ML
+    model lifecycle, not financial-crime alerting. Maps to Artificial Intelligence Management.
+- tag: Clustering
+  spec_file: bigml-clustering-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.92
+  evidence: POST /cluster createCluster 'Create a Cluster'; POST /centroid 'Create a Centroid (assign
+    cluster)'
+  reason: Unsupervised ML model creation and inference; clearly AI/ML model lifecycle management.
+- tag: Ensembles
+  spec_file: bigml-ensembles-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.92
+  evidence: POST /ensemble createEnsemble 'Create an Ensemble'
+  reason: Creation and management of ensemble ML models — AI/ML model lifecycle.
+- tag: Models
+  spec_file: bigml-models-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.92
+  evidence: 'POST /model createModel ''Create a Model''; schemas: Model, ResourceStatus'
+  reason: CRUD over machine-learning models on an ML platform — AI/ML model lifecycle management.
+- tag: Evaluations
+  spec_file: bigml-evaluations-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.88
+  evidence: POST /evaluation createEvaluation 'Create an Evaluation'
+  reason: Model performance evaluation on the ML platform — a core MLOps/model-lifecycle activity, not
+    general quality management.
+- tag: Predictions
+  spec_file: bigml-predictions-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.88
+  evidence: POST /prediction createPrediction 'Create a Prediction'
+  reason: ML model inference operations; part of AI/ML model lifecycle and MLOps rather than any forecasting
+    business process.
+- tag: Batch Operations
+  spec_file: bigml-batch-operations-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.85
+  evidence: POST /batchprediction createBatchPrediction 'Create a Batch Prediction'; POST /batchanomalyscore
+    'Create a Batch Anomaly Score'
+  reason: Despite the generic 'Batch Operations' tag, the operations are bulk ML inference (predictions,
+    centroids, anomaly scores) — part of the AI/ML model lifecycle and MLOps.
+- tag: Unsupervised Learning
+  spec_file: bigml-unsupervised-learning-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.85
+  evidence: POST /topicmodel createTopicModel Create a Topic Model; POST /pca createPCA Create a PCA Model
+  reason: CRUD over topic models, association discovery and PCA models is ML model lifecycle management,
+    squarely Artificial Intelligence Management.
+- tag: Time Series
+  spec_file: bigml-time-series-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.82
+  evidence: POST /timeseries createTimeSeries Create a Time Series; POST /forecast createForecast Create
+    a Forecast
+  reason: Operations create, train and manage time-series forecasting models and generate forecasts —
+    machine-learning model lifecycle on an ML platform, i.e. AI/ML management rather than any finance
+    or planning capability.
+- tag: Datasets
+  spec_file: bigml-datasets-api-openapi.yml
+  capability_id: BC-610
+  capability_id_l1: BC-610
+  capability_name: Information & Data Management
+  confidence: 0.7
+  evidence: POST /dataset createDataset 'Create a Dataset'
+  reason: Dataset lifecycle management within an ML platform; clearly information & data management but
+    ambiguous between data architecture and AI model-lifecycle sub-capabilities.
