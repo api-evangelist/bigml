@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: BigML Plans and Pricing
 description: Pricing plans for BigML machine learning platform
 url: https://bigml.com/pricing
@@ -76,3 +80,33 @@ certifications:
   - name: Architect
     price: $2,500 per person
     bulk_discount: 10% off for 5+
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: Free
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Prime
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: BigML Lite (Private Deployment)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Bronze Enterprise (Private Deployment)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
