@@ -114,46 +114,6 @@ paths:
         '204':
           description: Dataset deleted
 components:
-  parameters:
-    limit:
-      name: limit
-      in: query
-      required: false
-      schema:
-        type: integer
-        default: 20
-        maximum: 1000
-      description: Number of resources to return.
-    resourceId:
-      name: resource_id
-      in: path
-      required: true
-      schema:
-        type: string
-        pattern: ^[a-f0-9]{24}$
-      description: The 24-character hexadecimal resource identifier.
-    username:
-      name: username
-      in: query
-      required: true
-      schema:
-        type: string
-      description: BigML username.
-    offset:
-      name: offset
-      in: query
-      required: false
-      schema:
-        type: integer
-        default: 0
-      description: Index of the first resource to return.
-    apiKey:
-      name: api_key
-      in: query
-      required: true
-      schema:
-        type: string
-      description: BigML API key.
   schemas:
     ResourceBase:
       type: object
@@ -177,33 +137,6 @@ components:
             type: string
         private:
           type: boolean
-    ResourceStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: HTTP-style status code (1=queued,2=started,3=waiting,4=processing,5=finished,0=unknown,-1=failed)
-        message:
-          type: string
-        elapsed:
-          type: number
-          description: Processing time in milliseconds.
-    Dataset:
-      allOf:
-      - $ref: '#/components/schemas/ResourceBase'
-      - type: object
-        properties:
-          source:
-            type: string
-            description: Source resource ID used to create this dataset.
-          rows:
-            type: integer
-          columns:
-            type: integer
-          fields:
-            type: object
-            additionalProperties:
-              type: object
     ListResponse:
       type: object
       properties:
@@ -228,6 +161,73 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceBase'
+    Dataset:
+      allOf:
+      - $ref: '#/components/schemas/ResourceBase'
+      - type: object
+        properties:
+          source:
+            type: string
+            description: Source resource ID used to create this dataset.
+          rows:
+            type: integer
+          columns:
+            type: integer
+          fields:
+            type: object
+            additionalProperties:
+              type: object
+    ResourceStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: HTTP-style status code (1=queued,2=started,3=waiting,4=processing,5=finished,0=unknown,-1=failed)
+        message:
+          type: string
+        elapsed:
+          type: number
+          description: Processing time in milliseconds.
+  parameters:
+    limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 20
+        maximum: 1000
+      description: Number of resources to return.
+    apiKey:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML API key.
+    username:
+      name: username
+      in: query
+      required: true
+      schema:
+        type: string
+      description: BigML username.
+    offset:
+      name: offset
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 0
+      description: Index of the first resource to return.
+    resourceId:
+      name: resource_id
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: ^[a-f0-9]{24}$
+      description: The 24-character hexadecimal resource identifier.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
