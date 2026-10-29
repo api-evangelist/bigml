@@ -1,4 +1,4 @@
-# BigML (bigml)
+# BigML
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,65 +66,179 @@
 
 BigML is a machine learning platform with a comprehensive REST API for creating datasets, training models, making predictions, running batch predictions, and managing ML workflows. The platform supports supervised and unsupervised learning including decision trees, ensembles, deepnets, linear and logistic regression, clustering, anomaly detection, topic models, and time series forecasting.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/apis.yml)
+**Areas:** Machine Learning · Artificial Intelligence · Predictions · Datasets · Models · Clustering · Anomaly Detection · Time Series · Deep Learning
 
-## Tags
+## BigML on APIs.io
 
-- Machine Learning
-- Artificial Intelligence
-- Predictions
-- Datasets
-- Models
-- Clustering
-- Anomaly Detection
-- Time Series
-- Deep Learning
+Everything profiled for BigML is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/bigml/](https://apis.io/providers/bigml/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (15)
 
-- **Created:** 2026-06-13
-- **Modified:** 2026-06-13
+- [BigML Anomaly Detection API](https://apis.io/apis/bigml/bigml-anomaly-detection-api/) — Detect anomalies in datasets using Isolation Forest
+- [BigML Batch Operations API](https://apis.io/apis/bigml/bigml-batch-operations-api/) — Run predictions, centroid assignments, and anomaly scoring on full datasets
+- [BigML Clustering API](https://apis.io/apis/bigml/bigml-clustering-api/) — Create unsupervised cluster models and assign centroids
+- [BigML Data Connectors API](https://apis.io/apis/bigml/bigml-data-connectors-api/) — Connect to external databases and data sources
+- [BigML Datasets API](https://apis.io/apis/bigml/bigml-datasets-api/) — Create and manage training datasets from sources
+- [BigML Ensembles API](https://apis.io/apis/bigml/bigml-ensembles-api/) — Train and manage ensemble models (random forests, gradient boosted trees)
+- [BigML Evaluations API](https://apis.io/apis/bigml/bigml-evaluations-api/) — Evaluate model performance against a test dataset
+- [BigML Models API](https://apis.io/apis/bigml/bigml-models-api/) — Train and manage decision tree models
+- [BigML Predictions API](https://apis.io/apis/bigml/bigml-predictions-api/) — Generate individual predictions from trained models
+- [BigML Projects API](https://apis.io/apis/bigml/bigml-projects-api/) — Organize resources into projects
+- [BigML Sources API](https://apis.io/apis/bigml/bigml-sources-api/) — Upload and manage raw data sources (CSV, JSON, Excel, etc.)
+- [BigML Supervised Learning API](https://apis.io/apis/bigml/bigml-supervised-learning-api/) — Logistic regression, linear regression, and deep neural network models
+- [BigML Time Series API](https://apis.io/apis/bigml/bigml-time-series-api/) — Time series forecasting models and forecasts
+- [BigML Unsupervised Learning API](https://apis.io/apis/bigml/bigml-unsupervised-learning-api/) — Topic models, association rules, and PCA
+- [BigML WhizzML Scripting API](https://apis.io/apis/bigml/bigml-whizzml-scripting-api/) — Automate ML workflows with WhizzML scripts and executions
 
-## APIs
+### Published properties
 
-### BigML REST API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-The BigML REST API provides programmatic access to the full BigML machine learning platform. Create and manage sources, datasets, models, ensembles, clusters, anomaly detectors, topic models, time series forecasters, and generate predictions — both individual and batch — over HTTPS using username and API key authentication.
+#### Agentic access (1)
 
-- **Human URL:** [https://bigml.com/api/](https://bigml.com/api/)
-- **Base URL:** `https://bigml.io`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Bigml Agentic Access](https://apis.io/agentic-access/bigml/bigml-agentic-access/)
 
-- Machine Learning
-- Predictions
-- Datasets
-- Models
-- REST API
+#### JSON Schema (1)
 
-#### Properties
+The data models the API reads and writes.
 
-- [Documentation](https://bigml.com/api/)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/openapi/openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-schema/bigml-resource.json) — [JSON Schema](https://json-schema.org/specification)
-- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/vocabulary/bigml-vocabulary.yml)
-- [J S O N L D Context](https://raw.githubusercontent.com/api-evangelist/bigml/refs/heads/main/json-ld/bigml-context.jsonld)
+- [BigML Resource](https://apis.io/schemas/bigml/bigml-resource/)
 
-## Common Properties
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Bigml Context](https://apis.io/jsonld/bigml/bigml-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [BigML API Vocabulary](https://apis.io/vocabularies/bigml/bigml-vocabulary/)
+
+#### Examples (6)
+
+Example requests and responses.
+
+- [Create Cluster](https://apis.io/examples/bigml/create-cluster/)
+- [Create Dataset](https://apis.io/examples/bigml/create-dataset/)
+- [Create Ensemble](https://apis.io/examples/bigml/create-ensemble/)
+- [Create Model](https://apis.io/examples/bigml/create-model/)
+- [Create Prediction](https://apis.io/examples/bigml/create-prediction/)
+- [Create Source](https://apis.io/examples/bigml/create-source/)
+
+#### Collections (15)
+
+Postman and Open Collection request collections.
+
+- [BigML REST Anomaly Detection API](https://apis.io/collections/bigml/open-bigml-anomaly-detection-api/)
+- [BigML REST Anomaly Detection Batch Operations API](https://apis.io/collections/bigml/open-bigml-batch-operations-api/)
+- [BigML REST Anomaly Detection Clustering API](https://apis.io/collections/bigml/open-bigml-clustering-api/)
+- [BigML REST Anomaly Detection Data Connectors API](https://apis.io/collections/bigml/open-bigml-data-connectors-api/)
+- [BigML REST Anomaly Detection Datasets API](https://apis.io/collections/bigml/open-bigml-datasets-api/)
+- [BigML REST Anomaly Detection Ensembles API](https://apis.io/collections/bigml/open-bigml-ensembles-api/)
+- [BigML REST Anomaly Detection Evaluations API](https://apis.io/collections/bigml/open-bigml-evaluations-api/)
+- [BigML REST Anomaly Detection Models API](https://apis.io/collections/bigml/open-bigml-models-api/)
+- [BigML REST Anomaly Detection Predictions API](https://apis.io/collections/bigml/open-bigml-predictions-api/)
+- [BigML REST Anomaly Detection Projects API](https://apis.io/collections/bigml/open-bigml-projects-api/)
+- [BigML REST Anomaly Detection Sources API](https://apis.io/collections/bigml/open-bigml-sources-api/)
+- [BigML REST Anomaly Detection Supervised Learning API](https://apis.io/collections/bigml/open-bigml-supervised-learning-api/)
+- [BigML REST Anomaly Detection Time Series API](https://apis.io/collections/bigml/open-bigml-time-series-api/)
+- [BigML REST Anomaly Detection Unsupervised Learning API](https://apis.io/collections/bigml/open-bigml-unsupervised-learning-api/)
+- [BigML REST Anomaly Detection WhizzML Scripting API](https://apis.io/collections/bigml/open-bigml-whizzml-scripting-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [BigML — jsonschema rules](https://apis.io/rules/bigml/bigml-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Bigml Authentication](https://apis.io/security/bigml/bigml-authentication/)
+- [Bigml Domain Security](https://apis.io/security/bigml/bigml-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Bigml Plans Pricing](https://apis.io/plans/bigml/bigml-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Bigml Rate Limits](https://apis.io/rate-limits/bigml/bigml-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Bigml Finops](https://apis.io/finops/bigml/bigml-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://bigml.com/)
 - [Documentation](https://bigml.com/documentation/)
-- [Git Hub Org](https://github.com/bigmlcom)
-- [LinkedIn](https://www.linkedin.com/company/bigml-inc)
-- [Blog](https://blog.bigml.com/)
 - [Pricing](https://bigml.com/pricing)
-- [Status Page](https://status.bigml.com/)
-- [X (Twitter)](https://x.com/bigmlcom)
-- [Plans](plans/bigml-plans-pricing.yml)
-- [Rate Limits](rate-limits/bigml-rate-limits.yml)
-- [Fin Ops](finops/bigml-finops.yml)
+- [Blog](https://blog.bigml.com/)
+- [Status](https://status.bigml.com/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 34.4** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 57.7 |
+| Contract governance | 23.5 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 18.4 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 15.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/bigml/](https://apis.io/providers/bigml/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for BigML: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/bigml/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
